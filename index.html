@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MATH2273 Linear Algebra I — The Ultimate Study Hub</title>
+  <meta name="description" content="Interactive study hub for MATH2273 Linear Algebra I: full lessons for every chapter, proof templates, step-by-step solvers, practice generators, quizzes, mock tests and formula sheets.">
+  <meta name="theme-color" content="#05070f">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322d3ee'/%3E%3Cstop offset='.5' stop-color='%23a78bfa'/%3E%3Cstop offset='1' stop-color='%23f472b6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='900' font-size='26' text-anchor='middle' fill='%230b1020'%3ELA%3C/text%3E%3C/svg%3E">
+  <link rel="stylesheet" href="assets/vendor/katex/katex.min.css">
+  <link rel="stylesheet" href="assets/css/main.css">
+</head>
+<body>
+  <div class="bg-fx" aria-hidden="true"><div class="grid"></div><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+
+  <header class="header">
+    <button class="icon-btn menu-btn" id="menuBtn" aria-label="Open menu">☰</button>
+    <a class="brand" href="#/"><span class="brand-logo">LA</span><span class="brand-text">MATH2273 <span class="grad-text">Linear Algebra I</span><small>The Ultimate Study Hub</small></span></a>
+    <div class="header-spacer"></div>
+    <button class="search-trigger" id="searchBtn" aria-label="Search"><span class="st-ico">🔎</span><span class="st-text">Search the course…</span><kbd>Ctrl K</kbd></button>
+    <div class="streak" id="streak" title="Daily study streak"></div>
+    <div class="xp-chip" id="xpchip" title="Your level & XP — click for progress"></div>
+    <button class="icon-btn" id="themeBtn" aria-label="Toggle light/dark theme">☀️</button>
+  </header>
+
+  <div class="layout">
+    <nav class="sidebar" id="sidebar" aria-label="Main navigation"></nav>
+    <div class="scrim"></div>
+    <main class="main" id="view" tabindex="-1"></main>
+  </div>
+
+  <noscript><div style="padding:2rem">This study hub needs JavaScript enabled.</div></noscript>
+
+  <!-- Vendor (all local, works offline) -->
+  <script src="assets/vendor/katex/katex.min.js"></script>
+  <script src="assets/vendor/katex/contrib/auto-render.min.js"></script>
+  <script src="assets/vendor/confetti.browser.js"></script>
+
+  <!-- Core -->
+  <script src="assets/js/core/math.js"></script>
+  <script src="assets/js/core/parse.js"></script>
+  <script src="assets/js/core/app.js"></script>
+
+  <!-- Chapter content -->
+  <script src="assets/js/content/ch1.js"></script>
+  <script src="assets/js/content/ch2.js"></script>
+  <script src="assets/js/content/ch3.js"></script>
+  <script src="assets/js/content/ch3-ex.js"></script>
+  <script src="assets/js/content/ch4.js"></script>
+  <script src="assets/js/content/ch4-ex.js"></script>
+  <script src="assets/js/content/ch5.js"></script>
+  <script src="assets/js/content/ch6.js"></script>
+  <script src="assets/js/content/ch7.js"></script>
+
+  <!-- Study data -->
+  <script src="assets/js/data/quiz.js"></script>
+  <script src="assets/js/data/flashcards.js"></script>
+  <script src="assets/js/data/mocks.js"></script>
+  <script src="assets/js/data/parsons.js"></script>
+
+  <!-- Pages -->
+  <script src="assets/js/pages/chapter.js"></script>
+  <script src="assets/js/pages/home.js"></script>
+  <script src="assets/js/pages/plan.js"></script>
+  <script src="assets/js/pages/recipes.js"></script>
+  <script src="assets/js/pages/proofs.js"></script>
+  <script src="assets/js/pages/study.js"></script>
+  <script src="assets/js/pages/reference.js"></script>
+
+  <!-- Interactive labs & practice -->
+  <script src="assets/js/tools/transform2d.js"></script>
+  <script src="assets/js/tools/maps.js"></script>
+  <script src="assets/js/tools/gramschmidt.js"></script>
+  <script src="assets/js/tools/gs3d.js"></script>
+  <script src="assets/js/tools/matrixtools.js"></script>
+  <script src="assets/js/practice/generators.js"></script>
+
+  <script>LA.boot();</script>
+</body>
+</html>
