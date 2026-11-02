@@ -143,7 +143,7 @@ B: $A = \begin{pmatrix}a&b\\b&c\end{pmatrix}$: $\det A<0$ ⇒ indefinite; $\det 
 F: Classifying $ax^2+2bxy+cy^2 = d$ (with $d>0$)
 B: Eigenvalues of $\begin{pmatrix}a&b\\b&c\end{pmatrix}$: both $>0$ ⇒ ellipse; opposite signs ⇒ hyperbola; both $<0$ ⇒ empty; one $0$ ⇒ degenerate (parallel lines or empty).
 F: Rayleigh bounds
-B: Symmetric $A$, $\norm{x} = 1$: $\lambda_{\min}\le x^TAx\le\lambda_{\max}$, with equality at the corresponding unit eigenvectors.
+B: Symmetric $A$, $\norm{x} = 1$: $\lambda_{\mathrm{min}}\le x^TAx\le\lambda_{\mathrm{max}}$, with equality at the corresponding unit eigenvectors.
 F: Hessian (second-derivative) test
 B: At a critical point: Hessian PD ⇒ local minimum; ND ⇒ local maximum; indefinite ⇒ saddle point; only semidefinite ⇒ the test is inconclusive.
 ## ch5

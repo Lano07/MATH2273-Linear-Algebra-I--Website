@@ -128,7 +128,7 @@
     p("(a)", 2, H`Find the symmetric matrix of $Q = 2x^2+2y^2+2z^2+2xy+2yz+2xz$.`, [[2, "F", "$\\begin{pmatrix}2&1&1\\\\1&2&1\\\\1&1&2\\end{pmatrix}$"]], H`<p>$\begin{pmatrix}2&1&1\\1&2&1\\1&1&2\end{pmatrix}$.</p>`),
     p("(b)", 4, H`Use Sylvester's criterion to show $Q$ is positive definite.`, [[3, "A", "$\\Delta_1 = 2$, $\\Delta_2 = 3$, $\\Delta_3 = 4$"], [1, "J", "All positive ⇒ PD (A symmetric)"]], H`<p>Leading minors $2, 3, 4\gt0$.</p>`),
     p("(c)", 3, H`Find the eigenvalues of the matrix.`, [[3, "F", "$4$ (once), $1$ (twice)"]], H`<p>$4$ with eigenvector $(1,1,1)$; $1$ twice (the plane $x+y+z = 0$).</p>`),
-    p("(d)", 3, H`Find the minimum of $Q$ on the unit sphere.`, [[1, "J", "Rayleigh: min = smallest eigenvalue"], [2, "F", "$1$"]], H`<p>$\lambda_{\min} = 1$.</p>`)]);
+    p("(d)", 3, H`Find the minimum of $Q$ on the unit sphere.`, [[1, "J", "Rayleigh: min = smallest eigenvalue"], [2, "F", "$1$"]], H`<p>$\lambda_{\mathrm{min}} = 1$.</p>`)]);
   q("w-conic", 8, ["spectral", "principal-axes"], "written", "standard", "Principal axes of a conic", [
     p("(a)", 2, H`Write $5x^2-4xy+8y^2 = 36$ as $x^TAx = 36$.`, [[2, "F", "$A = \\begin{pmatrix}5&-2\\\\-2&8\\end{pmatrix}$"]], H`<p>$A = \begin{pmatrix}5&-2\\-2&8\end{pmatrix}$.</p>`),
     p("(b)", 6, H`Orthogonally diagonalize $A$.`, [[2, "A", "Eigenvalues $4, 9$"], [2, "A", "Unit eigenvectors $\\frac1{\\sqrt5}(2,1)$, $\\frac1{\\sqrt5}(1,-2)$"], [2, "N", "$P$ orthogonal with columns in the order of $D$"]], H`<p>$P = \tfrac1{\sqrt5}\begin{pmatrix}2&1\\1&-2\end{pmatrix}$, $D = \diag(4,9)$.</p>`),

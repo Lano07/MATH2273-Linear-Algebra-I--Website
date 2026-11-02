@@ -199,9 +199,9 @@ $\det A\lt0$ ⇒ <b>indefinite</b>; $\det A\gt0$, $a\gt0$ ⇒ <b>PD</b>; $\det A
 
       { id: "8.5", title: "Optimisation, Hessians and applications", html: H`
 <div class="box thm" data-t="8.5.1 · Extreme values on the unit sphere (Rayleigh)">
-<p>For symmetric $A$ with smallest and largest eigenvalues $\lambda_{\min}$, $\lambda_{\max}$:
-$$\lambda_{\min}\le x^TAx\le\lambda_{\max}\quad\text{whenever }\lVert x\rVert = 1,$$
-with the maximum (minimum) attained at a unit eigenvector for $\lambda_{\max}$ ($\lambda_{\min}$).</p>
+<p>For symmetric $A$ with smallest and largest eigenvalues $\lambda_{\mathrm{min}}$, $\lambda_{\mathrm{max}}$:
+$$\lambda_{\mathrm{min}}\le x^TAx\le\lambda_{\mathrm{max}}\quad\text{whenever }\lVert x\rVert = 1,$$
+with the maximum (minimum) attained at a unit eigenvector for $\lambda_{\mathrm{max}}$ ($\lambda_{\mathrm{min}}$).</p>
 </div>
 <div class="box proof" data-t="of Theorem 8.5.1">
 <p>With $x = Py$, $\lVert y\rVert = \lVert x\rVert = 1$, so $y_1^2+\dots+y_n^2 = 1$ and $x^TAx = \sum\lambda_iy_i^2$ is a weighted average of the $\lambda_i$ with weights $y_i^2$: it lies between the smallest and largest. Taking $y = e_i$ gives exactly $\lambda_i$.</p>
@@ -283,7 +283,7 @@ $$P = \frac1{\sqrt5}\begin{pmatrix}2&1\\1&-2\end{pmatrix},\qquad P^TAP = \begin{
 <tr><td>Principal axes</td><td>$x = Py$ ⇒ $Q = \sum\lambda_iy_i^2$</td><td>Classify conics by eigenvalue signs</td></tr>
 <tr><td>Eigenvalue test</td><td>PD ⇔ all $\lambda\gt0$, indefinite ⇔ mixed signs</td><td>Works for any symmetric $A$</td></tr>
 <tr><td>Sylvester</td><td>PD ⇔ all leading minors $\gt0$; ND ⇔ alternating</td><td>Symmetric only; not for semidefinite</td></tr>
-<tr><td>Rayleigh</td><td>$\lambda_{\min}\le x^TAx\le\lambda_{\max}$ on $\lVert x\rVert = 1$</td><td>Extremes at unit eigenvectors</td></tr>
+<tr><td>Rayleigh</td><td>$\lambda_{\mathrm{min}}\le x^TAx\le\lambda_{\mathrm{max}}$ on $\lVert x\rVert = 1$</td><td>Extremes at unit eigenvectors</td></tr>
 <tr><td>Hessian test</td><td>PD min, ND max, indefinite saddle</td><td>Semidefinite: inconclusive</td></tr>
 </table></div></div>`,
   });

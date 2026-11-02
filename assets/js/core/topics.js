@@ -115,7 +115,7 @@
       ["PD ⇔ all $\\lambda>0$ ⇔ all $\\Delta_k>0$", "ND ⇔ $(-1)^k\\Delta_k>0$", "Semidefinite: use eigenvalues, not leading minors"], { labs: [["Quadratic Forms Lab", "#/labs/quadratic"]] }),
     T("optimisation", 8, "Optimisation and the Hessian test", ["8.5"], ["8.5.1-8.5.99"], ["definiteness"],
       "On the unit sphere $x^TAx$ ranges exactly between the smallest and largest eigenvalues; the definiteness of the Hessian classifies critical points.",
-      ["$\\lambda_{\\min}\\le x^TAx\\le\\lambda_{\\max}$ for $\\lVert x\\rVert = 1$", "Hessian PD ⇒ min, ND ⇒ max, indefinite ⇒ saddle"], { labs: [["Quadratic Forms Lab", "#/labs/quadratic"]] }),
+      ["$\\lambda_{\\mathrm{min}}\\le x^TAx\\le\\lambda_{\\mathrm{max}}$ for $\\lVert x\\rVert = 1$", "Hessian PD ⇒ min, ND ⇒ max, indefinite ⇒ saddle"], { labs: [["Quadratic Forms Lab", "#/labs/quadratic"]] }),
   ];
   LA.topic = (id) => LA.TOPICS.find((t) => t.id === id);
   LA.topicsOf = (ch) => LA.TOPICS.filter((t) => t.ch === ch);

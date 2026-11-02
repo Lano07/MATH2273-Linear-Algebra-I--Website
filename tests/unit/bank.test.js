@@ -18,6 +18,8 @@ module.exports = function (t, LA) {
   const macros = LA.KATEX_MACROS;
   const texOK = (html, where) => {
     for (const seg of mathSegments(html)) {
+      // KaTeX emits invalid MathML (<msub> with 3 children) for operator names in sub/superscripts: write \mathrm{min} instead
+      if (/[_^]\{?\\(min|max|det|ker|dim|lim|log|sup|inf|tr)\b/.test(seg.tex)) { t.ok(false, where + " operator name in a sub/superscript (use \\mathrm{…}): «" + seg.tex.slice(0, 60) + "»"); return; }
       try { katex.renderToString(seg.tex, { displayMode: seg.display, throwOnError: true, strict: "ignore", macros: Object.assign({}, macros) }); }
       catch (e) { t.ok(false, where + " TeX error: " + e.message.slice(0, 120) + " in «" + seg.tex.slice(0, 80) + "»"); return; }
     }

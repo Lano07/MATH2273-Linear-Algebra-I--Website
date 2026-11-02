@@ -19,7 +19,10 @@ async function audit(page) {
     const tw = document.createTreeWalker(v, NodeFilter.SHOW_TEXT); let raw = 0, n;
     while ((n = tw.nextNode())) if (/\$/.test(n.nodeValue) && !n.parentElement.closest("code,pre,textarea,input,script,.katex,.mono,.mono-in")) raw++;
     const over = document.documentElement.scrollWidth > document.documentElement.clientWidth + 1;
-    return { kerr, raw, over, text: v.innerText.length };
+    // MathML validity (Firefox/Safari reject e.g. an <msub> with 3 children; screen readers read the MathML)
+    const need = { msub: 2, msup: 2, msubsup: 3, munder: 2, mover: 2, munderover: 3, mfrac: 2, mroot: 2 }; const badML = [];
+    v.querySelectorAll("math").forEach((m) => m.querySelectorAll(Object.keys(need).join(",")).forEach((el) => { if (el.children.length !== need[el.localName]) { const a = m.querySelector("annotation"); badML.push(el.localName + ": " + (a ? a.textContent : "").slice(0, 60)); } }));
+    return { kerr, raw, over, text: v.innerText.length, badML };
   });
 }
 
@@ -34,10 +37,11 @@ async function audit(page) {
   page.on("pageerror", (e) => errs.push(e.message));
   page.on("console", (m) => { if (m.type() === "error") errs.push(m.text()); });
   page.on("dialog", (d) => d.accept("note"));
-  const go = async (h, wait) => { errs.length = 0; await page.goto(base + "#" + h); await page.waitForTimeout(wait || 220); };
+  // hash navigation inside the already-loaded app (WebKit never fires "load" for same-document page.goto)
+  const go = async (h, wait) => { errs.length = 0; if (page.url().startsWith(base)) await page.evaluate((x) => LA.go("#" + x), h); else await page.goto(base + "#" + h); await page.waitForTimeout(wait || 220); };
 
   /* 1. every route */
-  await go("/");
+  await page.goto(base + "#/"); await page.waitForTimeout(300);
   const dyn = await page.evaluate(() => ({
     pages: LA.pages.map((p) => p.pattern).filter((p) => !p.includes(":") && !/^\/exams\/(run|mark|new)$/.test(p)),
     chapters: Object.values(LA.chapters).map((c) => c.num),
@@ -60,6 +64,7 @@ async function audit(page) {
     ok(a.kerr === 0, "no KaTeX errors on " + r);
     ok(a.raw === 0, "no unrendered $ on " + r);
     ok(a.text > 40, "content rendered on " + r);
+    ok(!a.badML.length, "valid MathML on " + r + (a.badML.length ? ": " + a.badML[0] : ""));
   }
   console.log("routes checked: " + routes.length);
 

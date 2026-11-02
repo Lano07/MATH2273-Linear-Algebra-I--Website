@@ -75,7 +75,7 @@
           const shape = (l[0] > 0 && l[1] > 0) ? (k > 0 ? "an ellipse" : k === 0 ? "the single point 0" : "empty") : (l[0] < 0 && l[1] < 0) ? (k < 0 ? "an ellipse" : k === 0 ? "the single point 0" : "empty") : (l[0] * l[1] < 0) ? (k === 0 ? "two lines through 0 (the asymptotes)" : "a hyperbola") : (k === 0 ? "a line (double)" : (l[0] + l[1]) * k > 0 ? "two parallel lines" : "empty");
           html += "<p><b>Principal axes:</b> rotate by $\\theta \\approx " + LA.nice(th) + "^\\circ$ (eigenvector directions). In those coordinates $Q = " + LA.nice(l[0]) + "X^2 " + (l[1] < 0 ? "- " + LA.nice(-l[1]) : "+ " + LA.nice(l[1])) + "Y^2$, so $Q = " + k + "$ is <b>" + shape + "</b>.</p><p><b>Rayleigh:</b> on $\\lVert x\\rVert = 1$, $Q$ ranges over $[" + LA.nice(Math.min(...l)) + ", " + LA.nice(Math.max(...l)) + "]$.</p>";
         }
-        html += '<p class="small muted">Formulas: $Q = x^TAx$, cross term $c\\,x_ix_j\\Rightarrow a_{ij} = a_{ji} = c/2$; PD ⇔ all $\\lambda\\gt0$ ⇔ all $\\Delta_k\\gt0$; $\\lambda_{\\min}\\le x^TAx\\le\\lambda_{\\max}$ on the unit sphere. <a href="#/ch/8?go=sec-8-4">§8.4</a> · <a href="#/ch/8?go=sec-8-3">§8.3</a></p>';
+        html += '<p class="small muted">Formulas: $Q = x^TAx$, cross term $c\\,x_ix_j\\Rightarrow a_{ij} = a_{ji} = c/2$; PD ⇔ all $\\lambda\\gt0$ ⇔ all $\\Delta_k\\gt0$; $\\lambda_{\\mathrm{min}}\\le x^TAx\\le\\lambda_{\\mathrm{max}}$ on the unit sphere. <a href="#/ch/8?go=sec-8-4">§8.4</a> · <a href="#/ch/8?go=sec-8-3">§8.3</a></p>';
         out.innerHTML = html; LA.enhance(out); LA.renderMath(out);
         draw(J);
       }

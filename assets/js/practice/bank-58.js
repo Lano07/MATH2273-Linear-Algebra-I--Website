@@ -413,7 +413,7 @@
     else { const s = sym2(r); A = H.FR(s.A); ev = s.l; }
     const isMax = r.bool(0.5), val = isMax ? Math.max(...ev) : Math.min(...ev), n = A.length;
     return { q: "<p>Find the " + (isMax ? "maximum" : "minimum") + " of $Q(x) = x^TAx$ subject to $\\lVert x\\rVert = 1$, where $A = " + mt(A) + "$.</p>", ans: { type: "num", answer: val }, model: String(val),
-      hints: ["Rayleigh: on the unit " + (n === 2 ? "circle" : "sphere") + ", $\\lambda_{\\min}\\le x^TAx\\le\\lambda_{\\max}$.", "The extremes are attained at unit eigenvectors.", "So find the eigenvalues of $A$.", "Eigenvalues: $" + ev.join(", ") + "$."],
+      hints: ["Rayleigh: on the unit " + (n === 2 ? "circle" : "sphere") + ", $\\lambda_{\\mathrm{min}}\\le x^TAx\\le\\lambda_{\\mathrm{max}}$.", "The extremes are attained at unit eigenvectors.", "So find the eigenvalues of $A$.", "Eigenvalues: $" + ev.join(", ") + "$."],
       sol: "<p>The eigenvalues are $" + ev.join(", ") + "$, so the " + (isMax ? "maximum" : "minimum") + " is $" + val + "$, attained at a unit eigenvector for $\\lambda = " + val + "$ (Theorem 8.5.1).</p>" };
   } });
 

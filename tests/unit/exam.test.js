@@ -3,7 +3,7 @@
 const path = require("path");
 const katex = require(path.resolve(__dirname, "../../assets/vendor/katex/katex.min.js"));
 module.exports = function (t, LA) {
-  const texOK = (html, where) => { const re = /\$\$([\s\S]+?)\$\$|\$([^$]+?)\$/g; let m; while ((m = re.exec(String(html)))) { try { katex.renderToString(m[1] || m[2], { displayMode: !!m[1], throwOnError: true, strict: "ignore", macros: Object.assign({}, LA.KATEX_MACROS) }); } catch (e) { t.ok(false, where + " TeX: " + e.message.slice(0, 100)); return; } } t.ok(true, where); };
+  const texOK = (html, where) => { const re = /\$\$([\s\S]+?)\$\$|\$([^$]+?)\$/g; let m; while ((m = re.exec(String(html)))) { if (/[_^]\{?\\(min|max|det|ker|dim|lim|log|sup|inf|tr)\b/.test(m[1] || m[2])) { t.ok(false, where + " operator name in a sub/superscript"); return; } try { katex.renderToString(m[1] || m[2], { displayMode: !!m[1], throwOnError: true, strict: "ignore", macros: Object.assign({}, LA.KATEX_MACROS) }); } catch (e) { t.ok(false, where + " TeX: " + e.message.slice(0, 100)); return; } } t.ok(true, where); };
   const Q = LA.EXAM_QUESTIONS;
   t.ok(Q.length >= 40, "exam bank has " + Q.length + " questions (incl. converted mocks)");
   Q.forEach((q) => {

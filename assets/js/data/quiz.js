@@ -619,7 +619,7 @@ Q: For a real symmetric $A$, the maximum of $x^TAx$ over unit vectors $x$ equals
 - $\det A$
 - the trace of $A$
 - the largest entry of $A$
-E: Rayleigh's theorem 8.5.1; the maximum is attained at a unit eigenvector for $\lambda_{\max}$.
+E: Rayleigh's theorem 8.5.1; the maximum is attained at a unit eigenvector for $\lambda_{\mathrm{max}}$.
 
 Q: At a critical point of $f(x,y)$ the Hessian has eigenvalues $3$ and $-2$. The point is
 * a saddle point
