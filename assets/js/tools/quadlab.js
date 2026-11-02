@@ -105,8 +105,11 @@
       }
       let drag = null;
       c3.addEventListener("mousedown", (e) => { drag = [e.clientX, e.clientY, yaw, pitch]; });
-      window.addEventListener("mouseup", () => { drag = null; });
-      window.addEventListener("mousemove", (e) => { if (!drag || c3.hidden) return; yaw = drag[2] + (e.clientX - drag[0]) / 120; pitch = Math.max(0.2, Math.min(1.45, drag[3] + (e.clientY - drag[1]) / 160)); if (cur) surface((x, y) => { const A = cur.A.map((r) => r.map((v) => v.toNumber())); return A[0][0] * x * x + 2 * A[0][1] * x * y + A[1][1] * y * y; }); });
+      const qUp = () => { drag = null; };
+      window.addEventListener("mouseup", qUp);
+      LA.onLeave(() => { window.removeEventListener("mouseup", qUp); window.removeEventListener("mousemove", qMove); });
+      window.addEventListener("mousemove", qMove);
+      function qMove(e) { if (!drag || c3.hidden) return; yaw = drag[2] + (e.clientX - drag[0]) / 120; pitch = Math.max(0.2, Math.min(1.45, drag[3] + (e.clientY - drag[1]) / 160)); if (cur) surface((x, y) => { const A = cur.A.map((r) => r.map((v) => v.toNumber())); return A[0][0] * x * x + 2 * A[0][1] * x * y + A[1][1] * y * y; }); }
       inp.addEventListener("input", update);
       kEl.addEventListener("input", () => { $("#kVal", view).textContent = kEl.value; update(); });
       ["qAxes", "qCircle", "q3d"].forEach((id) => $("#" + id, view).addEventListener("change", update));

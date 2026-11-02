@@ -10,7 +10,9 @@ const ENGINE = process.env.BROWSER || "chromium"; // chromium | firefox | webkit
 const { start } = require("./serve");
 
 let pass = 0, fail = 0; const failures = [];
-const ok = (cond, name) => { if (cond) pass++; else { fail++; failures.push(name); } };
+// never let a hung page stall the run (page.evaluate has no timeout of its own)
+const within = (p, ms, what) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error("timed out: " + what)), ms))]);
+const ok = (cond, name) => { if (cond) pass++; else { fail++; failures.push(name); console.log("FAIL: " + name); } };
 
 async function audit(page) {
   return page.evaluate(() => {
@@ -42,7 +44,7 @@ async function audit(page) {
   };
   await fresh();
   // hash navigation inside the already-loaded app (WebKit never fires "load" for same-document page.goto)
-  const go = async (h, wait) => { errs.length = 0; current = h; if (page.isClosed()) await fresh(); if (page.url().startsWith(base)) await page.evaluate((x) => LA.go("#" + x), h); else await page.goto(base + "#" + h); await page.waitForTimeout(wait || 220); };
+  const go = async (h, wait) => { errs.length = 0; current = h; if (page.isClosed()) await fresh(); if (page.url().startsWith(base)) await within(page.evaluate((x) => LA.go("#" + x), h), 15000, "navigate to " + h); else await page.goto(base + "#" + h); await page.waitForTimeout(wait || 220); };
 
   /* 1. every route */
   await page.goto(base + "#/"); await page.waitForTimeout(300);
@@ -65,7 +67,7 @@ async function audit(page) {
   for (const r of routes) {
     if (++k % 50 === 0) console.log("… " + k + " routes (" + r + ")");
     let a;
-    try { await go(r, /visualise|labs|quadratic/.test(r) ? 380 : 200); a = await audit(page); }
+    try { await go(r, /visualise|labs|quadratic/.test(r) ? 380 : 200); a = await within(audit(page), 15000, "audit " + r); }
     catch (e) { ok(false, "route " + r + " failed: " + e.message.split("\n")[0]); try { await page.close(); } catch (e2) { /* already gone */ } await fresh(); await page.goto(base + "#/"); await page.waitForTimeout(300); continue; }
     ok(!errs.length, "no console errors on " + r + (errs.length ? ": " + errs[0].slice(0, 120) : ""));
     ok(a.kerr === 0, "no KaTeX errors on " + r);

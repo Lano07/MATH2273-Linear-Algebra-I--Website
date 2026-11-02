@@ -109,8 +109,11 @@
       $$("[data-mode]", view).forEach((b) => b.addEventListener("click", () => { mode = b.dataset.mode; $$("[data-mode]", view).forEach((x) => x.setAttribute("aria-pressed", String(x === b))); load(); }));
       let drag = null;
       cv.addEventListener("mousedown", (e) => { drag = [e.clientX, e.clientY, yaw, pitch]; });
-      window.addEventListener("mouseup", () => { drag = null; });
-      window.addEventListener("mousemove", (e) => { if (!drag || dim === 2 || !document.body.contains(cv)) return; yaw = drag[2] + (e.clientX - drag[0]) / 140; pitch = Math.max(-1.2, Math.min(1.4, drag[3] + (e.clientY - drag[1]) / 160)); draw(); });
+      const gUp = () => { drag = null; };
+      window.addEventListener("mouseup", gUp);
+      LA.onLeave(() => { window.removeEventListener("mouseup", gUp); window.removeEventListener("mousemove", gMove); });
+      window.addEventListener("mousemove", gMove);
+      function gMove(e) { if (!drag || dim === 2 || !document.body.contains(cv)) return; yaw = drag[2] + (e.clientX - drag[0]) / 140; pitch = Math.max(-1.2, Math.min(1.4, drag[3] + (e.clientY - drag[1]) / 160)); draw(); }
       LA.setResize(() => { resize(); draw(); });
       resize(); load();
     },

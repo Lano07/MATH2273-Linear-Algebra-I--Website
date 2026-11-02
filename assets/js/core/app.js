@@ -152,6 +152,8 @@
   };
 
   /* ---------------- Router ---------------- */
+  // register a cleanup to run when the user navigates away (window listeners, timers…)
+  LA.onLeave = function (fn) { (LA._leave = LA._leave || []).push(fn); };
   LA.page = function (pattern, def) { LA.pages.push(Object.assign({ pattern }, def)); };
   function matchRoute(path) {
     for (const p of LA.pages) {
@@ -177,6 +179,7 @@
     const view = $("#view");
     if (LA.current && LA.current.page.leave) { try { LA.current.page.leave(); } catch (e) { /* noop */ } }
     LA.setResize(null);
+    (LA._leave || []).splice(0).forEach((fn) => { try { fn(); } catch (e) { /* ignore */ } });
     LA.current = m;
     let html;
     try { html = m.page.render(m.params, q); } catch (e) { console.error(e); html = '<div class="page"><div class="card"><h2>Something went wrong</h2><pre class="err">' + esc(e.stack || e.message) + "</pre></div></div>"; }

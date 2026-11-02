@@ -57,7 +57,9 @@
       cv.addEventListener("mousedown", down); cv.addEventListener("touchstart", down, { passive: false });
       window.addEventListener("mousemove", move); window.addEventListener("touchmove", move, { passive: false });
       window.addEventListener("mouseup", up); window.addEventListener("touchend", up);
-      return () => { window.removeEventListener("mousemove", move); window.removeEventListener("touchmove", move); window.removeEventListener("mouseup", up); window.removeEventListener("touchend", up); };
+      const off = () => { window.removeEventListener("mousemove", move); window.removeEventListener("touchmove", move); window.removeEventListener("mouseup", up); window.removeEventListener("touchend", up); };
+      if (LA.onLeave) LA.onLeave(off);
+      return off;
     };
     P.resize();
     return P;
