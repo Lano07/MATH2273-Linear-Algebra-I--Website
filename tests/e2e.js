@@ -1,10 +1,12 @@
 /* End-to-end, regression and responsive tests in headless Chromium (Playwright).
-   Usage: node tests/e2e.js            (needs `playwright` with Chromium installed: npm i -D playwright && npx playwright install chromium)
+   Usage: node tests/e2e.js            (needs `playwright`: npm i -D playwright && npx playwright install chromium)
+          BROWSER=firefox node tests/e2e.js   (or webkit) for cross-browser runs
    Checks: every route renders without console errors, KaTeX errors or unrendered "$"; no horizontal page overflow at
    390 / 820 / 1440 px; key user flows (practice, retry queue, exams, flashcards, notes, counterexamples, examiner,
    export data, saved-progress migration). Exit code 1 on any failure. */
 "use strict";
-const { chromium } = require("playwright");
+const pw = require("playwright");
+const ENGINE = process.env.BROWSER || "chromium"; // chromium | firefox | webkit
 const { start } = require("./serve");
 
 let pass = 0, fail = 0; const failures = [];
@@ -24,7 +26,8 @@ async function audit(page) {
 (async () => {
   const srv = await start(0);
   const base = "http://127.0.0.1:" + srv.address().port + "/index.html";
-  const browser = await chromium.launch();
+  const browser = await pw[ENGINE].launch();
+  console.log("browser: " + ENGINE);
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
   const page = await ctx.newPage();
   const errs = [];
