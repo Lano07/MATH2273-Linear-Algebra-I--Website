@@ -112,7 +112,7 @@
     { id: "first", ico: "🌱", name: "First Steps", desc: "Complete your first lesson section", test: (s) => Object.keys(s.done).length >= 1 },
     { id: "ch3", ico: "🔁", name: "Transformer", desc: "Complete every section of Chapter 3", test: () => LA.chapterProgress("ch3").pct === 100 },
     { id: "ch4", ico: "📐", name: "Orthogonal Mind", desc: "Complete every section of Chapter 4", test: () => LA.chapterProgress("ch4").pct === 100 },
-    { id: "all", ico: "👑", name: "Course Complete", desc: "Complete every section of all 7 chapters", test: () => Object.keys(LA.chapters).every((k) => LA.chapterProgress(k).pct === 100) },
+    { id: "all", ico: "👑", name: "Course Complete", desc: "Complete every section of every chapter", test: () => Object.keys(LA.chapters).every((k) => LA.chapterProgress(k).pct === 100) },
     { id: "quiz10", ico: "⚡", name: "Quick Thinker", desc: "Answer 10 quiz questions correctly", test: (s) => s.stats.quizCorrect >= 10 },
     { id: "quiz50", ico: "🧠", name: "Big Brain", desc: "Answer 50 quiz questions correctly", test: (s) => s.stats.quizCorrect >= 50 },
     { id: "perfect", ico: "💯", name: "Flawless", desc: "Score 100% on a quiz", test: (s) => s.stats.quizPerfect >= 1 },
@@ -196,14 +196,25 @@
   const TAGS = { def: "Definition", thm: "Theorem", prop: "Proposition", lem: "Lemma", cor: "Corollary", rem: "Remark", note: "Note", ex: "Example", proof: "Proof", tip: "Tip · Trick", trap: "Exam trap", exam: "Exam focus", intuition: "Intuition", recipe: "Recipe", beyond: "Beyond the notes", template: "Proof template", errata: "Correction" };
   LA.TAGS = TAGS;
   LA.boxTag = function (el) { for (const c of el.classList) if (TAGS[c]) return TAGS[c]; return ""; };
+  /* Depth levels: every box gets data-level f (Foundation), s (University Standard) or a (Advanced Enrichment).
+     Content can set data-level explicitly; otherwise the default depends on the box type. */
+  LA.DEPTH = {
+    f: { name: "Foundation", desc: "Core definitions, statements, examples, intuition, tips and traps — what you need to follow the course." },
+    s: { name: "University Standard", desc: "Everything examinable at university level: adds full proofs, exam-style questions and proof templates." },
+    a: { name: "Advanced Enrichment", desc: "Goes deeper than the notes require (clearly labelled). Great for understanding — check with your lecturer before relying on it in an exam." },
+  };
+  const LVL_DEFAULT = { proof: "s", template: "s", exam: "s", beyond: "a" };
+  LA.boxLevel = function (b) { if (b.dataset.level) return b.dataset.level; for (const c of b.classList) if (LVL_DEFAULT[c]) return LVL_DEFAULT[c]; return "f"; };
   LA.enhance = function (root) {
     $$(".box", root).forEach((b) => {
       if (b.dataset.enh) return; b.dataset.enh = "1";
+      b.dataset.level = LA.boxLevel(b);
       const t = b.getAttribute("data-t");
       const tag = b.getAttribute("data-tag") || LA.boxTag(b);
       if (t || tag) {
         const h = document.createElement("div"); h.className = "box-h";
-        h.innerHTML = (tag ? '<span class="box-tag">' + tag + "</span>" : "") + (t ? '<span class="box-title">' + t + "</span>" : "");
+        h.innerHTML = (tag ? '<span class="box-tag">' + tag + "</span>" : "") + (t ? '<span class="box-title">' + t + "</span>" : "") +
+          (b.dataset.level === "a" && !/enrich/i.test(tag) ? '<span class="lvl-chip" title="' + LA.DEPTH.a.desc + '">★ Enrichment</span>' : "");
         b.insertBefore(h, b.firstChild);
         if (t && !b.id) b.id = "b-" + slug(t);
       }
@@ -262,6 +273,7 @@
       { href: "#/glossary", ico: "🔤", label: "Glossary & Notation" },
       { href: "#/pastpapers", ico: "🗂️", label: "Past Papers" },
       { href: "#/beyond", ico: "🚀", label: "Beyond the Notes" },
+      { href: "#/syllabus", ico: "🧭", label: "Syllabus Coverage" },
       { href: "#/errata", ico: "🩹", label: "Notes Corrections" },
       { href: "#/progress", ico: "🏆", label: "Progress & Badges" },
     ] },

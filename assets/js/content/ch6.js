@@ -41,6 +41,13 @@ $$= a_{11}\begin{vmatrix}a_{22}&a_{23}\\a_{32}&a_{33}\end{vmatrix} - a_{12}\begi
 <div class="box thm" data-t="6.1.7 · Row operations and the determinant ★">
 <p>(i) Swap two rows: $\det B = -\det A$. (ii) Multiply a row by $c$: $\det B = c\det A$. (iii) $R_i\to R_i+cR_j$: $\det B = \det A$ (unchanged!). (iv) Two equal columns (or rows) ⇒ $\det A = 0$. (v) Triangular ⇒ $\det A$ = product of diagonal entries.</p>
 </div>
+<div class="box proof" data-t="of Theorem 6.1.7 (from the permutation formula)">
+<p>Every term $\sign(\sigma)a_{1\sigma(1)}\cdots a_{n\sigma(n)}$ contains exactly <b>one entry from each row</b>.</p>
+<ul><li><b>(ii) Scaling row $i$ by $c$:</b> each term gains exactly one factor $c$, so $\det B = c\det A$. More generally, $\det$ is linear in each row separately.</li>
+<li><b>(i) Swapping rows $i,j$:</b> the terms of $\det B$ are the terms of $\det A$ re-indexed by $\sigma\circ\tau$ with $\tau = (i\;j)$; since $\sign(\sigma\circ\tau) = -\sign(\sigma)$, every term changes sign: $\det B = -\det A$.</li>
+<li><b>Two equal rows ⇒ $\det = 0$:</b> swapping them leaves the matrix unchanged but negates the determinant, so $\det = -\det$, i.e. $\det = 0$. (Columns: use $\det A^T = \det A$, Theorem 6.2.1.)</li>
+<li><b>(iii) $R_i\to R_i+cR_j$:</b> by linearity in row $i$, $\det B = \det A+c\det A'$ where $A'$ has row $j$ copied into row $i$; $A'$ has two equal rows, so $\det B = \det A$.</li>
+<li><b>(v) Triangular:</b> for upper triangular $A$, $a_{i\sigma(i)} = 0$ whenever $\sigma(i)\lt i$. A permutation with $\sigma(i)\ge i$ for every $i$ must be the identity (look at $i = n, n-1,\dots$), so only $\sigma = e$ contributes: $\det A = a_{11}a_{22}\cdots a_{nn}$.</li></ul></div>
 <div class="box recipe" data-t="Determinant by row reduction (6.1.8)">
 <ol class="recipe-steps"><li>Use $R_i\to R_i+cR_j$ freely (no change) to create zeros below the diagonal.</li><li>Every swap: multiply by $-1$. Every $R_i\to cR_i$: the new determinant is $c$ times the old, so <b>divide by $c$</b> to compensate (the notes write the factor $\frac1c$ in front).</li><li>At triangular form: multiply the diagonal, times the compensating factors.</li></ol>
 </div>
@@ -59,6 +66,8 @@ $$|A| = \begin{vmatrix}1&3&6&2\\0&4&1&3\\0&3&-2&2\\0&0&7&2\end{vmatrix}\quad\tex
 <div class="box thm" data-t="6.2.4 · det tests independence">
 <p>$\det A\ne0$ ⇔ the columns (equivalently rows) of $A$ are linearly independent.</p>
 </div>
+<div class="box proof" data-t="of Theorems 6.2.3 and 6.2.4">
+<p>Row-reduce: $R = E_k\cdots E_1A$ with $R$ the RREF. By Theorem 6.1.7 each elementary operation multiplies the determinant by a <b>non-zero</b> number ($-1$, $c\neq0$ or $1$), so $\det R = (\text{non-zero})\cdot\det A$. If $A$ is invertible, $R = I$, so $\det A\neq0$. If $A$ is not invertible, $R$ has a zero row, so $\det R = 0$ and hence $\det A = 0$. Finally, $A$ is invertible iff its columns are independent (iff $Ax = 0$ has only the trivial solution), and $\det A = \det A^T$ gives the statement for rows.</p></div>
 <div class="box ex" data-t="6.2.5 · Are (1,1,4), (2,5,3), (6,1,1) independent?">
 $$\begin{vmatrix}1&2&6\\1&5&1\\4&3&1\end{vmatrix} = 1(5-3)-2(1-4)+6(3-20) = 2+6-102 = -94\ne0,$$
 <p>so yes — they are independent (and form a basis of $\R^3$).</p>
@@ -66,6 +75,10 @@ $$\begin{vmatrix}1&2&6\\1&5&1\\4&3&1\end{vmatrix} = 1(5-3)-2(1-4)+6(3-20) = 2+6-
 <div class="box thm" data-t="6.2.6–6.2.7 · Product rule and inverses">
 <p>$\det(AB) = \det(A)\det(B)$, and if $A$ is invertible, $\det(A^{-1}) = \dfrac{1}{\det A}$ (from $\det(A^{-1})\det(A) = \det(I) = 1$).</p>
 </div>
+<div class="box proof" data-t="of Theorem 6.2.6 (det(AB) = det A · det B)" data-level="a">
+<p><b>Elementary matrices first:</b> by Theorem 6.1.7, $\det(EM) = \det(E)\det(M)$ for every elementary $E$ (swap: $-1$; scale: $c$; add: $1$ — and $\det E$ is exactly that factor).</p>
+<p><b>If $A$ is invertible,</b> $A = E_1E_2\cdots E_k$ is a product of elementary matrices (row-reduce $A$ to $I$ and invert the steps), so $\det(AB) = \det(E_1)\cdots\det(E_k)\det(B) = \det(A)\det(B)$.</p>
+<p><b>If $A$ is not invertible,</b> neither is $AB$ (if $(AB)C = I$ then $A(BC) = I$ would make the square matrix $A$ invertible), so both sides are $0$. $\square$ &nbsp; <span class="muted">Corollary 6.2.7 follows by taking $B = A^{-1}$.</span></p></div>
 <div class="box trap" data-t="Determinant myths">
 <ul><li>$\det(A+B)\ne\det A+\det B$ in general.</li>
 <li>$\det(cA) = c^n\det A$ for an $n\times n$ matrix — <b>not</b> $c\det A$.</li>

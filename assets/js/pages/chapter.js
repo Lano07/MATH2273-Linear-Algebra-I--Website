@@ -18,7 +18,11 @@
       let body = "";
       if (tab === "lesson") {
         const toc = '<aside class="toc"><b>On this page</b>' + ch.sections.map((s) => '<a href="#/ch/' + ch.num + "?go=sec-" + slug(s.id) + '" class="' + (LA.state.done[ch.id + "/" + s.id] ? "done" : "") + '"><span class="muted">' + s.id + "</span> " + s.title + "</a>").join("") + '<a href="#/ch/' + ch.num + '?tab=exercises">📝 Exercises</a><a href="#/ch/' + ch.num + '?tab=quiz">⚡ Quiz</a></aside>';
-        body = '<div class="with-toc"><article class="lesson">' +
+        const depth = LA.store.get("depth", "a");
+        const depthBar = '<div class="card depth-bar no-print"><span class="kicker" style="margin:0">Depth</span><div class="seg" role="group" aria-label="Lesson depth">' +
+          ["f", "s", "a"].map((k) => '<button type="button" data-depth="' + k + '" aria-pressed="' + (k === depth) + '" title="' + LA.esc(LA.DEPTH[k].desc) + '">' + (k === "a" ? "Everything (incl. enrichment)" : LA.DEPTH[k].name) + "</button>").join("") +
+          '</div><span class="small muted" id="depthInfo" style="flex:1 1 240px"></span></div>';
+        body = depthBar + '<div class="with-toc"><article class="lesson" data-depth="' + depth + '">' +
           (ch.intro ? '<div class="card glow" style="margin-bottom:10px">' + ch.intro + "</div>" : "") +
           ch.sections.map((s) => {
             const key = ch.id + "/" + s.id; const done = !!LA.state.done[key];
@@ -54,6 +58,19 @@
         const a = $$(".toc a", view).find((x) => x.href.includes("sec-" + slug(b.dataset.done.split("/")[1]))); if (a) a.classList.toggle("done", on);
         if (on && LA.chapterProgress(ch.id).pct === 100) { LA.confetti({ particleCount: 220, spread: 120 }); LA.toast("🏁 Chapter " + ch.num + " complete!", "Now try the chapter quiz and exercises."); }
       }));
+      const art = $("article.lesson[data-depth]", view);
+      if (art) {
+        const info = $("#depthInfo", view);
+        const apply = (k) => {
+          art.dataset.depth = k; LA.store.set("depth", k);
+          $$("[data-depth]", view).forEach((b) => { if (b.tagName === "BUTTON") b.setAttribute("aria-pressed", String(b.dataset.depth === k)); });
+          const allow = { f: "f", s: "fs", a: "fsa" }[k] || "fsa";
+          const boxes = $$(".box", art), shown = boxes.filter((b) => allow.includes(b.dataset.level || "f")).length;
+          if (info) info.textContent = LA.DEPTH[k].desc + " · Showing " + shown + " of " + boxes.length + " boxes.";
+        };
+        $$("button[data-depth]", view).forEach((b) => b.addEventListener("click", () => apply(b.dataset.depth)));
+        apply(art.dataset.depth);
+      }
       if ((q.tab || "lesson") === "quiz" && LA.mountQuiz) LA.mountQuiz($("#chQuiz", view), ch.quiz || ch.id);
       const cv = $("canvas[data-hero]", view); if (cv && LA.heroCanvas) LA.heroCanvas(cv, ch.num);
     },

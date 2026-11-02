@@ -85,6 +85,8 @@
 <div class="box thm" data-t="2.3.5–2.3.7 · Span is the smallest subspace containing S">
 <p>$\spn(S)$ is a subspace of $V$ (proof: $0 = 0u$; sums and multiples of combinations are combinations), it is the <b>smallest</b> subspace containing $S$ (2.3.6), and $\spn(\emptyset) = \{0\}$ (2.3.7).</p>
 </div>
+<div class="box proof" data-t="of Theorem 2.3.6 (span(S) is the smallest subspace containing S)">
+<p>$\spn(S)$ is a subspace (Theorem 2.3.5) and contains $S$, since each $s = 1\cdot s$. Now let $W$ be <i>any</i> subspace with $S\subseteq W$. A subspace is closed under addition and scalar multiplication, hence under finite linear combinations, so every $a_1u_1+\dots+a_nu_n$ with $u_i\in S\subseteq W$ lies in $W$. Thus $\spn(S)\subseteq W$: every subspace containing $S$ contains $\spn(S)$.</p></div>
 <div class="box recipe" data-t="Does S span V? / Is v in span(S)?">
 <ol class="recipe-steps"><li>Write a general (or the given) vector as $a_1s_1+\dots+a_ks_k$.</li><li>Compare components → linear system in the $a_i$.</li><li>Consistent for <b>every</b> right-hand side ⇒ spans; inconsistent for some ⇒ doesn't. In $\R^n$: $n$ vectors span iff the matrix with them as columns has non-zero determinant.</li></ol>
 </div>` },
@@ -103,6 +105,10 @@ $$a_1u_1+\dots+a_nu_n = 0\;\Rightarrow\;a_1 = \dots = a_n = 0.$$</p>
 <div class="box thm" data-t="2.4.4 · Adding a vector to an independent set">
 <p>If $S$ is independent, then $S\cup\{v\}$ is dependent iff $v\in\spn(S)$.</p>
 </div>
+<div class="box proof" data-t="of Theorem 2.4.4 (with the hidden assumption v ∉ S)">
+<p>Let $S = \{u_1,\dots,u_n\}$ be independent and $v\notin S$. <i>(If $v\in S$ then $S\cup\{v\} = S$ is independent although $v\in\spn S$ — so the theorem needs $v\notin S$.)</i></p>
+<p><b>(⇐)</b> If $v = a_1u_1+\dots+a_nu_n$ then $1\cdot v-a_1u_1-\dots-a_nu_n = 0$ is a non-trivial relation (the coefficient of $v$ is $1$), so $S\cup\{v\}$ is dependent.</p>
+<p><b>(⇒)</b> If $a_0v+a_1u_1+\dots+a_nu_n = 0$ with not all coefficients $0$, then $a_0\neq0$ (otherwise we would have a non-trivial relation among the independent $u_i$). Hence $v = -\frac{1}{a_0}(a_1u_1+\dots+a_nu_n)\in\spn S$.</p></div>
 <div class="box def" data-t="2.4.5 · Basis and coordinates">
 <p>A <b>basis</b> is an independent spanning set. If $S = \{u_1,\dots,u_n\}$ is a basis and $u = a_1u_1+\dots+a_nu_n$, then $[u]_S = (a_1,\dots,a_n)^T$ is the <b>coordinate vector</b> of $u$.</p>
 </div>
@@ -112,6 +118,11 @@ $$a_1u_1+\dots+a_nu_n = 0\;\Rightarrow\;a_1 = \dots = a_n = 0.$$</p>
 <div class="box thm" data-t="2.4.7 · Three equivalent descriptions of a basis">
 <p>For $V\ne\{0\}$: $S$ is a basis ⇔ $S$ is a <b>minimal spanning set</b> (no proper subset spans) ⇔ $S$ is a <b>maximal independent set</b> (any strict superset is dependent).</p>
 </div>
+<div class="box proof" data-t="of Theorem 2.4.7 (cycle of equivalences)">
+<p><b>(i)⇒(ii)</b> $S$ spans. If a proper subset $W\subsetneq S$ also spanned $V$, pick $u\in S\setminus W$; then $u\in\spn W\subseteq\spn(S\setminus\{u\})$, so $S$ would be dependent (Theorem 2.4.4) — contradiction.</p>
+<p><b>(ii)⇒(i)</b> If a minimal spanning set $S$ were dependent, some vector of $S$ would be a combination of the others (Proposition 2.4.12) and could be removed without changing the span — contradicting minimality. So $S$ is independent and spans.</p>
+<p><b>(i)⇒(iii)</b> Any $v\notin S$ lies in $\spn S = V$, so $S\cup\{v\}$ is dependent (2.4.4): $S$ is maximal independent.</p>
+<p><b>(iii)⇒(i)</b> For every $v\notin S$, $S\cup\{v\}$ is dependent, so $v\in\spn S$ (2.4.4); vectors in $S$ are trivially in $\spn S$. So $S$ spans $V$ and is independent.</p></div>
 <div class="box prop" data-t="2.4.8 · Coordinates are unique">
 <p>Each $u\in V$ is a combination of basis vectors in exactly one way.</p>
 <p class="small"><b>Proof.</b> If $u = \sum a_iu_i = \sum b_iu_i$ then $\sum(a_i-b_i)u_i = 0$; independence gives $a_i = b_i$ for all $i$. $\square$</p>
@@ -125,6 +136,10 @@ $$a_1u_1+\dots+a_nu_n = 0\;\Rightarrow\;a_1 = \dots = a_n = 0.$$</p>
 <div class="box thm" data-t="2.4.12–2.4.13 · Pruning and extending">
 <p>If $\{v_1,\dots,v_m\}$ is dependent with $v_1\ne0$, some $v_j$ is in the span of the earlier ones and can be removed without changing the span. Consequently, in a finite-dimensional $V$: every subspace is finite-dimensional; every spanning set <b>contains</b> a basis; every independent set <b>extends</b> to a basis.</p>
 </div>
+<div class="box proof" data-t="of Proposition 2.4.12 and Theorem 2.4.13">
+<p><b>2.4.12</b> Take a non-trivial relation $a_1v_1+\dots+a_mv_m = 0$ and let $j$ be the <b>largest</b> index with $a_j\neq0$. If $j = 1$ then $a_1v_1 = 0$ forces $v_1 = 0$, contradicting $v_1\neq0$; so $j\ge2$ and $v_j = -\frac1{a_j}(a_1v_1+\dots+a_{j-1}v_{j-1})\in\spn(v_1,\dots,v_{j-1})$ — that is (i). For (ii), substitute this expression for $v_j$ in any linear combination: the span does not change when $v_j$ is deleted.</p>
+<p><b>2.4.13(ii) — reduce a spanning set:</b> while the set is dependent, delete a vector as in 2.4.12 (the span stays $V$). A finite set cannot shrink forever, so we end with an independent spanning set — a basis inside $S$.</p>
+<p><b>2.4.13(iii) — extend an independent set:</b> if $S$ does not span $V$, pick $v\notin\spn S$; then $S\cup\{v\}$ is still independent (2.4.4). Repeat. Since an independent set in $V$ has at most $\dim V$ vectors, this stops — with a basis containing $S$. <b>(i)</b> follows from (iii): a basis of a subspace is an independent set in $V$, so it has at most $\dim V$ elements.</p></div>
 <div class="box tip" data-t="The n-vectors-in-n-dimensions shortcut">
 <p>If $\dim V = n$ and you have exactly $n$ vectors, then <b>independent ⇔ spanning ⇔ basis</b> — check just one. In $\R^n$: put them as columns of a matrix $A$; basis iff $\det A\ne0$ (Chapter 6).</p>
 </div>` },
@@ -139,6 +154,10 @@ $$a_1u_1+\dots+a_nu_n = 0\;\Rightarrow\;a_1 = \dots = a_n = 0.$$</p>
 <div class="box thm" data-t="2.5.3 · Dimension of a sum">
 <p>$\dim(U+W) = \dim U+\dim W-\dim(U\cap W)$; for a direct sum $\dim V = \dim U+\dim W$.</p>
 </div>
+<div class="box proof" data-t="of Theorem 2.5.3 (dimension of a sum)">
+<p>Let $\{w_1,\dots,w_k\}$ be a basis of $U\cap W$. Extend it to a basis $\{w_i\}\cup\{u_1,\dots,u_p\}$ of $U$ and to a basis $\{w_i\}\cup\{x_1,\dots,x_q\}$ of $W$ (Theorem 2.4.13). <b>Claim:</b> $\{w_i\}\cup\{u_j\}\cup\{x_l\}$ is a basis of $U+W$.</p>
+<p><i>Spans:</i> every $u+w$ is a combination of these vectors. <i>Independent:</i> if $\sum a_iw_i+\sum b_ju_j+\sum c_lx_l = 0$, then $\sum c_lx_l = -(\sum a_iw_i+\sum b_ju_j)\in U$, and it is also in $W$; so it lies in $U\cap W$ and equals $\sum d_iw_i$. Independence of $\{w_i\}\cup\{x_l\}$ forces all $c_l = 0$ (and $d_i = 0$). Then $\sum a_iw_i+\sum b_ju_j = 0$ forces all $a_i = b_j = 0$.</p>
+<p>Therefore $\dim(U+W) = k+p+q = (k+p)+(k+q)-k = \dim U+\dim W-\dim(U\cap W)$.</p></div>
 <div class="box ex" data-t="2.5.4 · Direct sums in ℝ² and ℝ³">
 <p>(i) $\R^2 = \{(x,0)\}\oplus\{(0,y)\}$, each of dimension 1. <span class="small muted">(The notes write "dim(U) + dim(V)" — read "dim(U) + dim(W)".)</span><br>
 (ii) $\R^3 = \spn\{(1,1,1)\}\oplus\spn\{(0,1,1),(1,-1,0)\}$: every $(a,b,c)$ decomposes (solve for $x,y,z$) and the intersection is $\{0\}$.</p>

@@ -77,6 +77,8 @@ $\R^n$ is $n$-dimensional Euclidean space; $(1,-1,0)\in\R^3$ but $(1+2i,-1,0)\no
 <div class="box def" data-t="1.2.4 · Equivalence class">
 <p>$[x] = \{y\in A : yRx\}$. Every $x$ lies in its own class, and two different classes are disjoint (Remark 1.2.5) — the classes <b>partition</b> $A$.</p>
 </div>
+<div class="box proof" data-t="of Remark 1.2.5 (equivalence classes partition A)">
+<p>(i) $xRx$ by reflexivity, so $x\in[x]$. (ii) Suppose $[x]\cap[y]\neq\emptyset$, say $z$ is in both, so $zRx$ and $zRy$. By symmetry $xRz$, and by transitivity ($xRz$, $zRy$) we get $xRy$. Now if $w\in[x]$ then $wRx$ and $xRy$ give $wRy$, so $w\in[y]$; the same argument with $x,y$ swapped gives $[y]\subseteq[x]$. Hence two classes are either <b>equal</b> or <b>disjoint</b> — never partly overlapping.</p></div>
 <div class="box ex" data-t="1.2.6 · x R y iff x − y is even (full proof)">
 <ul><li><b>Reflexive:</b> $x-x = 0 = 2(0)$, even.</li>
 <li><b>Symmetric:</b> $x-y = 2k\Rightarrow y-x = 2(-k)$, even.</li>
@@ -105,6 +107,9 @@ $\R^n$ is $n$-dimensional Euclidean space; $(1,-1,0)\in\R^3$ but $(1+2i,-1,0)\no
 <p>For $C\subseteq A$, $f(C) = \{f(x): x\in C\}$. Then (i) $f(\emptyset) = \emptyset$; (ii) $C_1\subseteq C_2\Rightarrow f(C_1)\subseteq f(C_2)$; (v) $f(C_1\cap C_2)\subseteq f(C_1)\cap f(C_2)$; (vi) $f(C_1\cup C_2) = f(C_1)\cup f(C_2)$; (vii) if $f$ is injective, $f(C_1\cap C_2) = f(C_1)\cap f(C_2)$.</p>
 <p class="small"><b>Proof of (v):</b> if $y\in f(C_1\cap C_2)$ then $y = f(x)$ with $x\in C_1$ and $x\in C_2$, so $y\in f(C_1)$ and $y\in f(C_2)$. Equality can fail without injectivity (Exercise 1 Q5).</p>
 </div>
+<div class="box proof" data-t="of Theorem 1.2.16 (vi) and (vii)">
+<p><b>(vi)</b> $y\in f(C_1\cup C_2)\iff y = f(x)$ for some $x\in C_1$ or $x\in C_2\iff y\in f(C_1)$ or $y\in f(C_2)\iff y\in f(C_1)\cup f(C_2)$.</p>
+<p><b>(vii)</b> "$\subseteq$" is (v). For "$\supseteq$": let $y\in f(C_1)\cap f(C_2)$, so $y = f(x_1) = f(x_2)$ with $x_1\in C_1$, $x_2\in C_2$. Injectivity gives $x_1 = x_2\in C_1\cap C_2$, hence $y\in f(C_1\cap C_2)$.</p></div>
 <div class="box def" data-t="1.2.17–1.2.18 · Equal functions and composition">
 <p>$f = g$ if $f(x) = g(x)$ for all $x$. For $f:A\to B$, $g:B\to C$: $(g\circ f)(x) = g(f(x))$. Composition is <b>not commutative</b> in general.</p>
 </div>
@@ -119,6 +124,10 @@ $\R^n$ is $n$-dimensional Euclidean space; $(1,-1,0)\in\R^3$ but $(1+2i,-1,0)\no
 <div class="box def" data-t="1.2.20–1.2.23 · Identity and inverse functions">
 <p>$I_A(x) = x$. <b>Theorem 1.2.21:</b> $f:A\to B$ is bijective iff there is a unique $g:B\to A$ with $f\circ g = I_B$ and $g\circ f = I_A$; this $g$ is the <b>inverse</b> $f^{-1}$. <b>Theorem 1.2.23:</b> if $f,g$ are bijective then $(g\circ f)^{-1} = f^{-1}\circ g^{-1}$ ("socks and shoes": undo in reverse order).</p>
 </div>
+<div class="box proof" data-t="of Theorems 1.2.21 and 1.2.23 (exercises in the notes)">
+<p><b>1.2.21 (⇒)</b> Let $f$ be bijective. For $y\in B$ there is an $x$ with $f(x) = y$ (onto), and only one (one-to-one); define $g(y) = x$. Then $f(g(y)) = y$ and $g(f(x)) = x$, i.e. $f\circ g = I_B$, $g\circ f = I_A$. <b>Uniqueness:</b> if $h$ also satisfies both, $h = h\circ I_B = h\circ(f\circ g) = (h\circ f)\circ g = I_A\circ g = g$.</p>
+<p><b>1.2.21 (⇐)</b> If $f\circ g = I_B$ and $g\circ f = I_A$: <i>injective</i> — $f(x_1) = f(x_2)\Rightarrow x_1 = g(f(x_1)) = g(f(x_2)) = x_2$; <i>surjective</i> — any $y = f(g(y))$.</p>
+<p><b>1.2.23</b> $(g\circ f)\circ(f^{-1}\circ g^{-1}) = g\circ(f\circ f^{-1})\circ g^{-1} = g\circ g^{-1} = I_C$ and $(f^{-1}\circ g^{-1})\circ(g\circ f) = f^{-1}\circ f = I_A$ (associativity). By the uniqueness in 1.2.21, $(g\circ f)^{-1} = f^{-1}\circ g^{-1}$.</p></div>
 <div class="box def" data-t="1.2.24 · Binary operation">
 <p>A <b>binary operation</b> on $A$ is a function $A\times A\to A$ — the key word is <b>closure</b>: the result must land back in $A$. We write $a\oplus b$ for $\oplus(a,b)$ (Remark 1.2.25).</p>
 </div>

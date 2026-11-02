@@ -549,6 +549,120 @@ Q: Cayley–Hamilton says that
 - $A$ is diagonalizable
 - $A^{-1} = A^T$
 E: Theorem 7.3.5.
+
+## ch8 | Chapter 8 — Quadratic Forms & Orthogonal Diagonalization
+Q: The symmetric matrix of $Q(x,y) = 3x^2+4xy-y^2$ is
+* $\begin{pmatrix}3&2\\2&-1\end{pmatrix}$
+- $\begin{pmatrix}3&4\\0&-1\end{pmatrix}$
+- $\begin{pmatrix}3&4\\4&-1\end{pmatrix}$
+- $\begin{pmatrix}3&-2\\-2&-1\end{pmatrix}$
+E: Split the cross term equally: $a_{12} = a_{21} = \tfrac42 = 2$ (Theorem 8.1.2). The matrix $\begin{pmatrix}3&4\\4&-1\end{pmatrix}$ would give $8xy$.
+
+Q: Every real symmetric matrix
+* has real eigenvalues and an orthonormal basis of eigenvectors
+- is invertible
+- has distinct eigenvalues
+- is positive definite
+E: The Spectral Theorem 8.2.5. ($O$ and $I$ are symmetric but not invertible / not with distinct eigenvalues respectively.)
+
+Q: A square matrix $P$ is orthogonal when
+* $P^{-1} = P^T$
+- $P^{-1} = P$
+- $\det P = 0$
+- $P^T = -P$
+E: Definition 8.2.1: $P^TP = I$, i.e. the columns form an orthonormal set.
+
+Q: Eigenvectors of a real symmetric matrix belonging to different eigenvalues are always
+* orthogonal
+- parallel
+- equal in length
+- linearly dependent
+E: Theorem 8.2.4: $\lambda_1\langle u,v\rangle = \langle Au,v\rangle = \langle u,Av\rangle = \lambda_2\langle u,v\rangle$ forces $\langle u,v\rangle = 0$.
+
+Q: The quadratic form with matrix $\begin{pmatrix}2&1\\1&2\end{pmatrix}$ is
+* positive definite
+- negative definite
+- indefinite
+- positive semidefinite but not definite
+E: Eigenvalues $1$ and $3$ are both positive (or: $a = 2>0$ and $\det = 3>0$).
+
+Q: The quadratic form with matrix $\begin{pmatrix}1&3\\3&1\end{pmatrix}$ is
+* indefinite
+- positive definite
+- negative definite
+- positive semidefinite
+E: $\det = 1-9 = -8<0$, so the eigenvalues ($4$ and $-2$) have opposite signs.
+
+Q: Sylvester's criterion: a real symmetric matrix $A$ is positive definite if and only if
+* all its leading principal minors are positive
+- all its diagonal entries are positive
+- $\det A>0$
+- all its entries are positive
+E: Theorem 8.4.3. Positive diagonal entries are necessary but not sufficient: $\begin{pmatrix}1&2\\2&1\end{pmatrix}$ is indefinite.
+
+Q: Which statement about positive SEMIdefiniteness of a symmetric matrix is FALSE?
+* It holds whenever all leading principal minors are $\ge0$
+- It holds iff all eigenvalues are $\ge0$
+- It holds iff $x^TAx\ge0$ for every $x$
+- It holds iff $A = B^TB$ for some matrix $B$
+E: $\diag(0,-1)$ has leading minors $0,0$ but $x^TAx = -y^2$ can be negative. (For semidefiniteness ALL principal minors must be checked.)
+
+Q: The curve $5x^2-4xy+8y^2 = 36$ is
+* an ellipse
+- a hyperbola
+- a parabola
+- a pair of intersecting lines
+E: Eigenvalues $4$ and $9$ are both positive: in principal axes $4X^2+9Y^2 = 36$ (Example 8.3.2).
+
+Q: For a real symmetric $A$, the maximum of $x^TAx$ over unit vectors $x$ equals
+* the largest eigenvalue of $A$
+- $\det A$
+- the trace of $A$
+- the largest entry of $A$
+E: Rayleigh's theorem 8.5.1; the maximum is attained at a unit eigenvector for $\lambda_{\max}$.
+
+Q: At a critical point of $f(x,y)$ the Hessian has eigenvalues $3$ and $-2$. The point is
+* a saddle point
+- a local minimum
+- a local maximum
+- impossible to classify
+E: An indefinite Hessian gives a saddle point (Theorem 8.5.3).
+
+Q: A symmetric $A$ has eigenvalues $0$ and $5$. Then $x^TAx$ is
+* positive semidefinite but not positive definite
+- positive definite
+- indefinite
+- negative semidefinite
+E: All eigenvalues are $\ge0$ and one equals $0$, so $Q(v) = 0$ for an eigenvector $v\neq0$ of $0$.
+
+Q: Substituting $x = Py$ ($P$ orthogonal) into $x^TAx$ gives
+* $y^T(P^TAP)y$
+- $y^T(PAP^T)y$
+- $y^TAy$
+- $y^T(P^{-1}AP^{-1})y$
+E: $(Py)^TA(Py) = y^TP^TAPy$. With $P$ = orthonormal eigenvectors, $P^TAP = D$ (Theorem 8.3.1).
+
+## ch5 | Chapter 5 — Systems of Linear Equations
+Q: Two $m\times n$ matrices are equivalent ($B = PAQ$ with $P,Q$ invertible) if and only if
+* they have the same rank
+- they have the same determinant
+- they have the same eigenvalues
+- they have the same reduced row echelon form
+E: Theorem 5.3.4: rank is the only invariant of equivalence. (Same RREF characterises ROW-equivalence.)
+
+Q: An elementary column operation on $A$ is the same as
+* multiplying $A$ on the right by an elementary matrix
+- multiplying $A$ on the left by an elementary matrix
+- transposing $A$
+- adding a multiple of $I$ to $A$
+E: Definition 5.3.1. Row operations multiply on the left.
+
+Q: The normal form of a $3\times4$ matrix of rank $2$ is
+* $\begin{pmatrix}I_2&0\\0&0\end{pmatrix}$ of size $3\times4$
+- $I_3$
+- $I_2$
+- the RREF of the matrix
+E: Theorem 5.3.3: $N_r$ has the same size as $A$ with $I_r$ in the top-left corner.
 `;
 
   function parse(raw) {
@@ -556,7 +670,7 @@ E: Theorem 7.3.5.
     const flush = () => { if (q && cur) cur.qs.push(q); q = null; };
     raw.split("\n").forEach((line) => {
       const l = line.replace(/\s+$/, "");
-      if (l.startsWith("## ")) { flush(); const [id, title] = l.slice(3).split("|").map((s) => s.trim()); cur = sets[id] = { id, title, qs: [] }; }
+      if (l.startsWith("## ")) { flush(); const [id, title] = l.slice(3).split("|").map((s) => s.trim()); cur = sets[id] = sets[id] || { id, title, qs: [] }; }
       else if (l.startsWith("Q: ")) { flush(); q = { q: l.slice(3), o: [], a: -1, e: "" }; }
       else if (l.startsWith("* ")) { q.a = q.o.length; q.o.push(l.slice(2)); }
       else if (l.startsWith("- ")) { q.o.push(l.slice(2)); }
@@ -567,5 +681,5 @@ E: Theorem 7.3.5.
   }
   LA.QUIZ = parse(RAW);
   LA.QUIZ.mix34 = { id: "mix34", title: "Coursework Mix — Chapters 3 & 4", qs: LA.QUIZ.ch3.qs.concat(LA.QUIZ.ch4.qs) };
-  LA.QUIZ.all = { id: "all", title: "Everything — all 7 chapters", qs: Object.keys(LA.QUIZ).filter((k) => /^ch\d$/.test(k)).reduce((a, k) => a.concat(LA.QUIZ[k].qs), []) };
+  LA.QUIZ.all = { id: "all", title: "Everything — all chapters", qs: Object.keys(LA.QUIZ).filter((k) => /^ch\d$/.test(k)).reduce((a, k) => a.concat(LA.QUIZ[k].qs), []) };
 })();

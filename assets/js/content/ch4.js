@@ -226,6 +226,12 @@ $$\spn\{v_1,\dots,v_i\} = \spn\{w_1,\dots,w_i\}\quad\text{for each } 1\le i\le n
 <p class="small muted">Remark 4.2.13: the construction below is the <b>Gram–Schmidt orthogonalization process</b>; it converts any independent set into an orthonormal basis of its span. (The notes' remark cites "Theorem 4.2.8" — it means 4.2.12.)</p>
 </div>
 
+<div class="box proof" data-t="of Theorem 4.2.12 (why Gram–Schmidt works)">
+<p>We show by induction on $k$ that $w_1,\dots,w_k$ are orthonormal and $\spn\{w_1,\dots,w_k\} = \spn\{v_1,\dots,v_k\}$. For $k = 1$: $v_1\neq0$ (independent set), so $w_1 = v_1/\lVert v_1\rVert$ is a unit vector with the same span.</p>
+<p><b>Inductive step.</b> Let $u_k = v_k-\sum_{j\lt k}\langle v_k,w_j\rangle w_j$.</p>
+<ul><li><i>$u_k\neq0$:</i> otherwise $v_k\in\spn\{w_1,\dots,w_{k-1}\} = \spn\{v_1,\dots,v_{k-1}\}$, contradicting independence.</li>
+<li><i>Orthogonality:</i> for $i\lt k$, $\langle u_k,w_i\rangle = \langle v_k,w_i\rangle-\sum_{j\lt k}\langle v_k,w_j\rangle\langle w_j,w_i\rangle = \langle v_k,w_i\rangle-\langle v_k,w_i\rangle = 0$, using $\langle w_j,w_i\rangle = \delta_{ij}$.</li>
+<li><i>Span:</i> $w_k = u_k/\lVert u_k\rVert$ is a combination of $v_k$ and $w_1,\dots,w_{k-1}$, hence lies in $\spn\{v_1,\dots,v_k\}$; and $v_k = u_k+\sum_{j\lt k}\langle v_k,w_j\rangle w_j\in\spn\{w_1,\dots,w_k\}$. So the spans agree.</li></ul></div>
 <div class="box recipe" data-t="4.2.14 · The process exactly as in your notes">
 <ol class="recipe-steps">
 <li><b>Step 1:</b> $u_1 = v_1$ and $w_1 = \hat u_1 = \dfrac{u_1}{\lVert u_1\rVert}$.</li>

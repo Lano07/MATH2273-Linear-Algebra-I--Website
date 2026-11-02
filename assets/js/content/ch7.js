@@ -61,7 +61,11 @@ $\lambda = -3$: $A+3I = \begin{pmatrix}4&2\\2&1\end{pmatrix}\cong\begin{pmatrix}
 </div>
 <div class="box thm" data-t="7.2.4 · Geometric ≤ algebraic">
 <p>For every eigenvalue: $1\le$ geometric multiplicity $\le$ algebraic multiplicity.</p>
-</div>` },
+</div>
+<div class="box proof" data-t="of Theorem 7.2.4 (geometric ≤ algebraic)">
+<p>Let $\lambda_0$ have geometric multiplicity $k$ with eigenspace basis $v_1,\dots,v_k$. Extend to a basis $v_1,\dots,v_n$ of $\FF^n$ and let $P = (v_1|\cdots|v_n)$. Since $Av_i = \lambda_0v_i$ for $i\le k$,
+$$P^{-1}AP = \begin{pmatrix}\lambda_0I_k&B\\0&C\end{pmatrix}\;\Rightarrow\;p_A(\lambda) = p_{P^{-1}AP}(\lambda) = (\lambda_0-\lambda)^k\det(C-\lambda I)$$
+(similar matrices have the same characteristic polynomial, Theorem 7.2.3; the determinant of a block-triangular matrix is the product of the diagonal blocks' determinants). So $(\lambda-\lambda_0)^k$ divides $p_A$: the algebraic multiplicity is at least $k$. Also $k\ge1$ because an eigenvalue has at least one eigenvector.</p></div>` },
       { id: "7.3", title: "Diagonalization and Cayley–Hamilton", html: H`
 <div class="box def" data-t="7.3.1 · Diagonalizable">
 <p>$A$ is diagonalizable if $P^{-1}AP = D$ for some invertible $P$ and diagonal $D$.</p>
@@ -69,11 +73,17 @@ $\lambda = -3$: $A+3I = \begin{pmatrix}4&2\\2&1\end{pmatrix}\cong\begin{pmatrix}
 <div class="box thm" data-t="7.3.2 · How to diagonalize">
 <p>(i) $P^{-1}AP = \diag(d_1,\dots,d_n)$ ⇔ column $i$ of $P$ is an eigenvector for $d_i$. (ii) $A$ is diagonalizable ⇔ $A$ has $n$ linearly independent eigenvectors.</p>
 </div>
+<div class="box proof" data-t="of Theorem 7.3.2">
+<p>Write $P = (p_1|\cdots|p_n)$ and $D = \diag(d_1,\dots,d_n)$. Column $i$ of $AP$ is $Ap_i$ and column $i$ of $PD$ is $d_ip_i$, so $AP = PD\iff Ap_i = d_ip_i$ for every $i$. (i) If $P$ is invertible, $P^{-1}AP = D\iff AP = PD\iff$ each $p_i$ is an eigenvector for $d_i$ (non-zero, since $P$ is invertible). (ii) $P$ is invertible exactly when its $n$ columns are independent; so a diagonalizing $P$ exists iff $A$ has $n$ independent eigenvectors.</p></div>
 <div class="box thm" data-t="7.3.3 · Distinct eigenvalues ⇒ diagonalizable (corrected statement)">
 <p>If $A\in\FF^{n\times n}$ has $n$ <b>distinct</b> eigenvalues in $\FF$, then $A$ is diagonalizable (eigenvectors for distinct eigenvalues are independent).</p>
 <div class="box errata" data-t="The notes state this as “if and only if” — the converse is false">
 <p>$I_2 = \begin{pmatrix}1&0\\0&1\end{pmatrix}$ is already diagonal (so diagonalizable) but has the repeated eigenvalue $1,1$. <b>The correct test:</b> $A$ is diagonalizable over $\FF$ iff $p_A$ splits over $\FF$ and, for every eigenvalue, <b>geometric multiplicity = algebraic multiplicity</b>. Example 7.3.4(i) is still right — because the geometric multiplicity of $\lambda = 1$ there is 1 &lt; 2.</p></div>
 </div>
+<div class="box proof" data-t="of Theorem 7.3.3 (eigenvectors for distinct eigenvalues are independent)">
+<p>Let $v_1,\dots,v_m$ be eigenvectors for distinct eigenvalues $\lambda_1,\dots,\lambda_m$. Suppose they were dependent and let $k$ be the smallest index such that $v_k\in\spn\{v_1,\dots,v_{k-1}\}$ (so $v_1,\dots,v_{k-1}$ are independent): $v_k = c_1v_1+\dots+c_{k-1}v_{k-1}$. Apply $A-\lambda_kI$:
+$$0 = (A-\lambda_kI)v_k = c_1(\lambda_1-\lambda_k)v_1+\dots+c_{k-1}(\lambda_{k-1}-\lambda_k)v_{k-1}.$$
+By independence each $c_i(\lambda_i-\lambda_k) = 0$, and $\lambda_i\neq\lambda_k$, so every $c_i = 0$ and $v_k = 0$ — impossible for an eigenvector. Hence they are independent. With $n$ distinct eigenvalues we get $n$ independent eigenvectors, so $A$ is diagonalizable by Theorem 7.3.2.</p></div>
 <div class="box ex" data-t="7.3.4 · Diagonalizable or not?">
 <p>(i) $\begin{pmatrix}1&1\\0&1\end{pmatrix}$: $\lambda = 1,1$; $A-I = \begin{pmatrix}0&1\\0&0\end{pmatrix}$ has rank 1, so only one independent eigenvector ⇒ <b>not diagonalizable</b>.</p>
 <p>(ii) $A = \begin{pmatrix}3&0&0\\4&0&1\\3&-1&0\end{pmatrix}$ has distinct eigenvalues $3,i,-i$ ⇒ diagonalizable over $\C$:
@@ -83,6 +93,10 @@ The order of eigenvalues in $D$ matches the order of eigenvectors in $P$.</p>
 <div class="box thm" data-t="7.3.5 · Cayley–Hamilton">
 <p>Every $A\in\C^{n\times n}$ satisfies its own characteristic equation: $p_A(A) = 0$ (the zero matrix).</p>
 </div>
+<div class="box proof" data-t="of Cayley–Hamilton (diagonalizable case, 2×2 case, and the general idea)">
+<p><b>Diagonalizable $A$:</b> if $A = PDP^{-1}$ then $A^k = PD^kP^{-1}$, so $p_A(A) = P\,p_A(D)\,P^{-1} = P\diag\big(p_A(\lambda_1),\dots,p_A(\lambda_n)\big)P^{-1} = P\,0\,P^{-1} = 0$, since each $\lambda_i$ is a root of $p_A$.</p>
+<p><b>Any $2\times2$ $A$</b> (direct check): with $A = \begin{pmatrix}a&b\\c&d\end{pmatrix}$, $A^2 = \begin{pmatrix}a^2+bc&b(a+d)\\c(a+d)&d^2+bc\end{pmatrix}$, and $A^2-(a+d)A+(ad-bc)I = 0$ entry by entry.</p>
+<p class="small"><b>General case (enrichment):</b> $(A-\lambda I)\operatorname{adj}(A-\lambda I) = p_A(\lambda)I$. Write $\operatorname{adj}(A-\lambda I) = B_0+B_1\lambda+\dots+B_{n-1}\lambda^{n-1}$ and $p_A(\lambda) = c_0+c_1\lambda+\dots+c_n\lambda^n$, compare coefficients of each $\lambda^k$, multiply the $k$-th equation by $A^k$ on the left and add: the left side telescopes to $0$ and the right side is $p_A(A)$.</p></div>
 <div class="box recipe" data-t="7.3.6 · Inverse via Cayley–Hamilton">
 <ol class="recipe-steps"><li>Compute $p_A(\lambda)$; check its constant term $= \det A\ne0$.</li><li>Replace $\lambda$ by $A$ and constants $c$ by $cI$: $p_A(A) = 0$.</li><li>Multiply by $A^{-1}$ (every power drops by one; $cI\mapsto cA^{-1}$).</li><li>Solve for $A^{-1}$ and compute.</li></ol>
 </div>

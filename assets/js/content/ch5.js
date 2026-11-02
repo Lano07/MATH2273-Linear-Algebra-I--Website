@@ -44,6 +44,8 @@ $$E_1 = \begin{pmatrix}0&0&1\\0&1&0\\1&0&0\end{pmatrix},\;E_2 = \begin{pmatrix}1
 <div class="box def" data-t="REF and RREF">
 <p><b>Pivot</b> = leftmost non-zero entry of a non-zero row. <b>Row echelon form (REF):</b> zero rows at the bottom, and each pivot is strictly to the right of the pivot above. <b>Reduced REF (RREF):</b> REF + every pivot equals 1 and is the only non-zero entry in its column. The RREF of a matrix is <b>unique</b> (5.1.15); computing REF is <b>Gauss elimination</b>, RREF is <b>Gauss–Jordan</b> (5.1.16).</p>
 </div>
+<div class="box proof" data-t="of Theorem 5.1.15 (the RREF is unique)" data-level="a">
+<p>Row operations do not change the solutions of $Ax = 0$ (Theorem 5.1.13), so the columns of $A$ and of any RREF $R$ of $A$ satisfy <b>exactly the same linear relations</b> ($\sum x_jc_j = 0$ holds for the columns of $A$ iff it holds for the columns of $R$). In an RREF, column $j$ is a pivot column iff it is <i>not</i> a combination of the earlier columns, and then it equals the next standard basis vector; a non-pivot column lists the coefficients that express it in terms of the earlier pivot columns. Both descriptions depend only on the linear relations among the columns of $A$. Hence two RREFs of $A$ have the same pivot columns and the same non-pivot columns: they are equal.</p></div>
 <div class="box ex" data-t="5.1.17(i) · Gauss–Jordan to the identity">
 $$\begin{pmatrix}1&2&4\\2&6&-4\\1&1&1\end{pmatrix}\xrightarrow[R_3\to R_3-R_1]{R_2\to R_2-2R_1}\begin{pmatrix}1&2&4\\0&2&-12\\0&-1&-3\end{pmatrix}\xrightarrow{R_3\to R_3+\frac12R_2}\begin{pmatrix}1&2&4\\0&2&-12\\0&0&-9\end{pmatrix}\xrightarrow{R_3\to-\frac19R_3}\begin{pmatrix}1&2&4\\0&2&-12\\0&0&1\end{pmatrix}$$
 $$\xrightarrow[R_1\to R_1-4R_3]{R_2\to R_2+12R_3}\begin{pmatrix}1&2&0\\0&2&0\\0&0&1\end{pmatrix}\xrightarrow{R_2\to\frac12R_2}\begin{pmatrix}1&2&0\\0&1&0\\0&0&1\end{pmatrix}\xrightarrow{R_1\to R_1-2R_2}I_3.$$
@@ -78,9 +80,13 @@ $$\xrightarrow[R_1\to R_1-4R_3]{R_2\to R_2+12R_3}\begin{pmatrix}1&2&0\\0&2&0\\0&
 <div class="box rem" data-t="5.2.4 · Bases for RS and CS">
 <p>(i) Rows/columns themselves may be dependent. (ii) The non-zero rows of an REF of $A$ form a basis of $\RS(A)$, so $\dim\RS(A) = \Rank A$. (iii) $\CS(A)$ corresponds to $\RS(A^T)$, and $\dim\CS(A) = \dim\RS(A) = \Rank A$.</p>
 </div>
+<div class="box proof" data-t="of Remark 5.2.4(ii) (row operations preserve the row space)">
+<p>Each elementary operation replaces rows by linear combinations of the old rows, so $\RS(B)\subseteq\RS(A)$ when $B$ comes from $A$. Every operation can be undone by another elementary operation, so also $\RS(A)\subseteq\RS(B)$: the row space never changes. In an echelon form, the non-zero rows are independent: in a relation $\sum c_ir_i = 0$, look at the first pivot column — only $r_1$ is non-zero there, so $c_1 = 0$; then the second pivot column gives $c_2 = 0$, and so on. Hence the non-zero rows form a basis of $\RS(A)$.</p></div>
 <div class="box tip" data-t="Column space without transposing">
 <p>The notes reduce $A^T$. Faster alternative: row-reduce $A$ once; the columns of the <b>original</b> $A$ that contain pivots form a basis of $\CS(A)$. (Row operations preserve the dependence relations among columns.)</p>
 </div>
+<div class="box proof" data-t="Why the pivot columns of A give a basis of CS(A)">
+<p>$Ax = 0$ and $Rx = 0$ have the same solutions, so a linear relation $\sum x_jc_j = 0$ among the columns of $A$ holds iff the same relation holds among the columns of $R$. In $R$ the pivot columns are distinct standard basis vectors (independent) and every other column is a combination of them. The same is therefore true for the corresponding columns of $A$: the pivot columns of $A$ are independent and span $\CS(A)$. (Row operations <i>do</i> change the column space itself, which is why we must take the columns from the <b>original</b> $A$.)</p></div>
 <div class="box ex" data-t="5.2.5 · Row and column space bases">
 <p>$A = \begin{pmatrix}1&5&2&1\\4&3&2&1\\1&4&2&1\end{pmatrix}\cong\begin{pmatrix}1&5&2&1\\0&-1&0&0\\0&0&-6&-3\end{pmatrix}$, so $\{(1,5,2,1),(0,-1,0,0),(0,0,-6,-3)\}$ is a basis of $\RS(A)$. Reducing $A^T$ gives the basis $\{(1,4,1)^T,(0,-6,0)^T,(0,0,-1)^T\}$ of $\CS(A)$. $\Rank A = 3$.</p>
 </div>

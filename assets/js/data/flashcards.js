@@ -120,6 +120,37 @@ F: Diagonalizable (correct criterion)
 B: $n$ independent eigenvectors ⇔ geometric = algebraic multiplicity for every eigenvalue. $n$ distinct eigenvalues is sufficient.
 F: Cayley–Hamilton
 B: $p_A(A) = 0$. Multiply by $A^{-1}$ to express $A^{-1}$ as a polynomial in $A$.
+
+## ch8
+F: Quadratic form on $\R^n$
+B: $Q(x) = x^TAx = \sum_{i,j}a_{ij}x_ix_j$ with $A$ symmetric (unique). A cross term $c\,x_ix_j$ gives $a_{ij} = a_{ji} = c/2$.
+F: Orthogonal matrix
+B: $P^TP = I$, i.e. $P^{-1} = P^T$. Columns form an orthonormal basis; $P$ preserves lengths and angles; $\det P = \pm1$.
+F: Spectral Theorem (real symmetric matrices)
+B: $A = A^T$ ⇒ all eigenvalues are real and $A = PDP^T$ with $P$ orthogonal (orthonormal eigenvector columns) and $D$ diagonal.
+F: Eigenvectors of a symmetric matrix
+B: Eigenvectors for distinct eigenvalues are orthogonal. Normalise them for the columns of $P$; use Gram–Schmidt inside a repeated eigenspace.
+F: Principal Axes Theorem
+B: $x = Py$ with $P$ orthogonal (columns = orthonormal eigenvectors of $A$) turns $x^TAx$ into $\lambda_1y_1^2+\dots+\lambda_ny_n^2$ — no cross terms.
+F: Positive definite, semidefinite, indefinite
+B: PD: $Q(x)>0$ for all $x\neq0$. PSD: $Q(x)\ge0$ for all $x$. ND / NSD: the reverse inequalities. Indefinite: $Q$ takes both signs.
+F: Eigenvalue test for definiteness
+B: Symmetric $A$: PD ⇔ all $\lambda>0$; PSD ⇔ all $\lambda\ge0$; ND ⇔ all $\lambda<0$; NSD ⇔ all $\lambda\le0$; indefinite ⇔ eigenvalues of both signs.
+F: Sylvester's criterion
+B: Symmetric $A$ is PD ⇔ every leading principal minor $\Delta_1,\dots,\Delta_n$ is $>0$. ND ⇔ the signs alternate $-,+,-,\dots$ It does NOT test semidefiniteness: $\diag(0,-1)$.
+F: $2\times2$ definiteness shortcut
+B: $A = \begin{pmatrix}a&b\\b&c\end{pmatrix}$: $\det A<0$ ⇒ indefinite; $\det A>0,\ a>0$ ⇒ PD; $\det A>0,\ a<0$ ⇒ ND; $\det A = 0$ ⇒ semidefinite.
+F: Classifying $ax^2+2bxy+cy^2 = d$ (with $d>0$)
+B: Eigenvalues of $\begin{pmatrix}a&b\\b&c\end{pmatrix}$: both $>0$ ⇒ ellipse; opposite signs ⇒ hyperbola; both $<0$ ⇒ empty; one $0$ ⇒ degenerate (parallel lines or empty).
+F: Rayleigh bounds
+B: Symmetric $A$, $\norm{x} = 1$: $\lambda_{\min}\le x^TAx\le\lambda_{\max}$, with equality at the corresponding unit eigenvectors.
+F: Hessian (second-derivative) test
+B: At a critical point: Hessian PD ⇒ local minimum; ND ⇒ local maximum; indefinite ⇒ saddle point; only semidefinite ⇒ the test is inconclusive.
+## ch5
+F: Equivalent matrices (§5.3)
+B: $A\sim B$ ⇔ $B = PAQ$ with $P,Q$ invertible ⇔ same size and same rank. Every rank-$r$ matrix $\sim N_r = \begin{pmatrix}I_r&0\\0&0\end{pmatrix}$.
+F: Elementary column operations (§5.3)
+B: A column operation is right-multiplication $A\mapsto AE$. Preserves rank and column space, but mixes the unknowns of $Ax = b$ — never use it to solve systems.
 `;
   const cards = []; let ch = null, cur = null;
   RAW.split("\n").forEach((l) => {
