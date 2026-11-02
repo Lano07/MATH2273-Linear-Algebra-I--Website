@@ -185,6 +185,7 @@
     document.title = (m.page.title ? (typeof m.page.title === "function" ? m.page.title(m.params) : m.page.title) + " · " : "") + "MATH2273 Linear Algebra I";
     LA.enhance(view);
     if (m.page.after) { try { m.page.after(view, m.params, q); } catch (e) { console.error(e); } }
+    (LA.afterRoute || []).forEach((fn) => { try { fn(view, m, q); } catch (e) { console.error(e); } });
     LA.renderMath(view);
     LA.updateNav();
     document.body.classList.remove("nav-open");
@@ -275,8 +276,14 @@
       { href: "#/labs/rref", ico: "🪜", label: "Row Reduction Stepper" },
       { href: "#/labs/det", ico: "🔢", label: "Determinant Lab" },
       { href: "#/labs/eigen", ico: "🧿", label: "Eigen Lab" },
+      { href: "#/labs/change-of-basis", ico: "🧭", label: "Change-of-Basis Lab" },
+      { href: "#/labs/quadratic", ico: "🥚", label: "Quadratic Forms Lab" },
+      { href: "#/labs/gs-studio", ico: "🎬", label: "Gram–Schmidt Studio" },
+      { href: "#/labs/calculator", ico: "🧮", label: "Matrix Calculator" },
     ] },
     { title: "Reference", items: [
+      { href: "#/encyclopedia", ico: "📚", label: "Encyclopedia & Theorems" },
+      { href: "#/map", ico: "🗺️", label: "Concept Map" },
       { href: "#/formulas", ico: "📜", label: "Formula & Theorem Sheet" },
       { href: "#/glossary", ico: "🔤", label: "Glossary & Notation" },
       { href: "#/pastpapers", ico: "🗂️", label: "Past Papers" },

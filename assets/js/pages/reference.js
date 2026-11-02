@@ -60,6 +60,7 @@
     ["Normal form", "$N_r$: the $m\\times n$ matrix with $I_r$ in the top-left corner and zeros elsewhere.", 5]
   );
   GLOSS.sort((a, b) => a[0].localeCompare(b[0]));
+  LA.NOTATION = NOTATION; LA.GLOSS = GLOSS;
   LA.page("/glossary", {
     title: "Glossary & Notation", searchTitle: "Glossary & Notation", searchDesc: "Every symbol decoded; every term defined",
     render() {

@@ -392,6 +392,29 @@ textarea.ans-in { min-height: 70px; resize: vertical; }
 .srs-front { margin: .5em 0; font-size: 1.35rem; }
 .srs-card textarea { width: 100%; }
 .srs-card [data-r] small { opacity: .7; font-weight: 500; }
+/* Labs (v2) */
+.sm-in { width: 64px; text-align: center; padding: 5px 6px; }
+.lab-meta { margin: 6px 0 14px; padding: 12px 18px; }
+.lab-meta summary { cursor: pointer; list-style: none; }
+.lab-meta summary::-webkit-details-marker { display: none; }
+.lab-meta ul { margin: .3em 0; padding-left: 1.1em; }
+/* Concept map */
+.cm-wrap { overflow-x: auto; }
+svg.cm { display: block; min-width: 1100px; max-width: none; height: auto; }
+.cm-t { font: 600 12px var(--font-body, sans-serif); fill: var(--text); pointer-events: none; }
+.cm-h { font: 700 12px var(--font-head, sans-serif); fill: var(--muted); letter-spacing: .04em; }
+.cm-edge { fill: none; stroke: var(--border-strong); stroke-width: 1.4; transition: opacity .15s; }
+.cm-ah { fill: var(--muted); }
+.cm-node rect { stroke-width: 1.5; transition: opacity .15s; }
+.cm-node:focus { outline: none; }
+.cm-node:focus rect, .cm-node:hover rect { stroke-width: 3; }
+svg.cm.focus .cm-node:not(.is-self):not(.is-anc):not(.is-desc) { opacity: .28; }
+svg.cm.focus .cm-edge { opacity: .15; }
+svg.cm.focus .cm-edge.e-anc { opacity: 1; stroke: var(--violet); stroke-width: 2.4; }
+svg.cm.focus .cm-edge.e-desc { opacity: 1; stroke: var(--pink); stroke-width: 2.4; }
+.cm-node.is-anc rect { stroke: var(--violet); stroke-width: 2.5; }
+.cm-node.is-desc rect { stroke: var(--pink); stroke-width: 2.5; }
+.cm-path li { margin: 4px 0; }
 /* Depth levels (Foundation / Standard / Enrichment) */
 .lvl-chip { margin-left: auto; font-size: .64rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 2px 9px; border-radius: 999px; border: 1px dashed var(--pink); color: var(--pink); white-space: nowrap; cursor: help; }
 .lesson[data-depth="f"] .box[data-level="s"], .lesson[data-depth="f"] .box[data-level="a"], .lesson[data-depth="s"] .box[data-level="a"] { display: none; }
