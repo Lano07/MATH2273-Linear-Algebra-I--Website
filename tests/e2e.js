@@ -53,11 +53,15 @@ async function audit(page) {
 (async () => {
   const srv = await start(0);
   const base = "http://127.0.0.1:" + srv.address().port + "/index.html";
-  const browser = await pw[ENGINE].launch();
+  let browser = await pw[ENGINE].launch();
   console.log("browser: " + ENGINE);
-  const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
+  let ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
   const errs = []; let page, current = "";
+  // isolated runs open hundreds of tabs; a periodic browser restart keeps memory bounded on small CI machines
+  let opened = 0, allowRestart = ISOLATE;
+  const relaunch = async () => { try { await browser.close(); } catch (e) { /* already gone */ } browser = await pw[ENGINE].launch(); ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } }); };
   const fresh = async () => {
+    if (allowRestart && ++opened % 75 === 0) await relaunch();
     page = await ctx.newPage();
     page.on("pageerror", (e) => errs.push(e.message));
     page.on("console", (m) => { if (m.type() === "error") errs.push(m.text()); });
@@ -136,7 +140,9 @@ async function audit(page) {
     ok(!b.over, "no horizontal overflow on the next page after shrinking (" + r + " → /notes)" + (b.over ? " — " + b.why : ""));
   });
   console.log("responsive checks: " + (keyPages.length * 3 + phone.length + shrinkPages.length * 2));
-  if (ISOLATE) { try { await page.close(); } catch (e) { /* ignore */ } await fresh(); }
+  // flows share saved data across steps, so they run in ONE browser context (a fresh browser for isolated runs)
+  allowRestart = false;
+  if (ISOLATE) { await relaunch(); await fresh(); }
   await page.setViewportSize({ width: 1280, height: 900 });
 
   /* 3. flows (each guarded; later flows still run if an earlier one fails) */
