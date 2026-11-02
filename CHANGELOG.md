@@ -38,6 +38,8 @@ An upgrade of the existing site (not a rebuild): every v1 page, lab and saved-pr
 * Fix: maths such as $\lambda_{\mathrm{min}}$ produced invalid MathML in Firefox/Safari (and for screen readers); now valid everywhere, with a test guard.
 * Fix: labs, flashcards, the proof examiner and the math keyboard no longer leave listeners behind (or keep old pages in memory) after you navigate away; a keyboard rating in flashcards rates exactly one card.
 * Fix: long button labels wrap on phones instead of being cut off.
+* Performance: cards no longer blur the animated background behind them (visually identical, but every card was re-blurred on every frame): pages render at ~60 fps instead of 22–40 fps under CPU throttling, which also saves battery during long study sessions. Header buttons no longer animate their size when the window narrows (phone rotation).
+* Accessibility: elements scrolled into view by the keyboard or by links land below the sticky header instead of underneath it; the highlight toolbar stays on screen near the right edge.
 
 ## 1.0.0 — November 2026
 First release: lessons for Chapters 1–7 following the notes, full exercise solutions, coursework battle plan for Chapters 3–4, recipes, proof studio with templates and puzzles, 12 practice generators, quizzes, flashcards, 3 mock tests, 10 interactive labs, formula sheet, glossary, past-paper hub, corrections page, XP/badges.
