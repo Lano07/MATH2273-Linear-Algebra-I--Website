@@ -33,8 +33,11 @@ An upgrade of the existing site (not a rebuild): every v1 page, lab and saved-pr
 * **Smart dashboard** separating mastery from activity, with trends, heatmap, weak concepts and recommendations.
 * **Bookmarks, notes, highlights with annotations**, *My Notes* page; **focus mode**, text size, line spacing and motion settings; skip link, visible focus styles, keyboard shortcuts; expanded search (topics, theorems, generators, exam questions, drills, counterexamples, mistakes); print sheets.
 * Responsive fixes for phones and tablets (no horizontal overflow at 390 / 820 / 1440 px).
-* **Tests**: Node unit + mathematical regression suite (~79,000 checks) and a Playwright end-to-end suite (~1,500 checks).
+* **Tests**: Node unit + mathematical regression suite (~79,000 checks) and a Playwright end-to-end suite (~1,900 checks: every route, MathML validity, overflow at 390 / 820 / 1440 px, user flows), run on GitHub Actions in Chromium, Firefox and WebKit.
 * Fix: constant expressions such as `1/2` are now parsed exactly (they were silently compared as decimals).
+* Fix: maths such as $\lambda_{\mathrm{min}}$ produced invalid MathML in Firefox/Safari (and for screen readers); now valid everywhere, with a test guard.
+* Fix: labs, flashcards, the proof examiner and the math keyboard no longer leave listeners behind (or keep old pages in memory) after you navigate away; a keyboard rating in flashcards rates exactly one card.
+* Fix: long button labels wrap on phones instead of being cut off.
 
 ## 1.0.0 — November 2026
 First release: lessons for Chapters 1–7 following the notes, full exercise solutions, coursework battle plan for Chapters 3–4, recipes, proof studio with templates and puzzles, 12 practice generators, quizzes, flashcards, 3 mock tests, 10 interactive labs, formula sheet, glossary, past-paper hub, corrections page, XP/badges.

@@ -51,4 +51,5 @@ Export/import on the Progress page copies every `la2273:*` key.
 ## Tests
 
 * `node tests/run-unit.js [filter]` — loads the scripts in a Node `vm` context (`tests/harness.js`), compiles every formula with KaTeX.
-* `node tests/e2e.js` — Playwright/Chromium against `tests/serve.js`: all routes, responsive overflow at 390/820/1440 px, user flows and data migrations.
+* `node tests/e2e.js` — Playwright against `tests/serve.js` (`BROWSER=chromium|firefox|webkit`): all routes (console errors, KaTeX errors, unrendered `$`, MathML validity), responsive overflow at 390/820/1440 px with the offending elements named, and user flows including data migrations. Each responsive check and flow is a guarded step with a time limit, so one stall is reported and the run continues; Firefox/WebKit (or `ISOLATE=1`) use a fresh tab per check.
+* Page modules must not leave listeners or timers behind: register cleanups with `LA.onLeave(fn)` (run before the next route renders).

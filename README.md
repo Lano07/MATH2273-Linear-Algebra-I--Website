@@ -45,7 +45,10 @@ Official MATH 2273 past papers are held by The Alma Jordan Library (UWI St. Augu
 node tests/run-unit.js          # unit + mathematical regression tests (no browser needed)
 npm install && npx playwright install chromium
 node tests/e2e.js               # every route, responsive checks (390/820/1440 px), user flows
+BROWSER=firefox node tests/e2e.js   # or webkit (after: npx playwright install firefox webkit)
 ```
+
+GitHub Actions (`.github/workflows/tests.yml`) runs the unit suite and the end-to-end suite in Chromium, Firefox and WebKit on every push and pull request. In Firefox and WebKit each check runs in a fresh tab (`ISOLATE=1` does the same in Chromium); an overflow failure names the elements that stick out.
 
 The unit suite runs every generator at every difficulty over many seeds (the model answer must pass its own checker, every formula must compile in KaTeX), tests the answer-equivalence engine, the Proof Examiner heuristics, the counterexample verifiers, the exam bank (marks add up; exams hit their mark targets and are reproducible) and the spaced-repetition scheduler. The end-to-end suite renders all ~340 routes and checks for console errors, KaTeX errors, unrendered maths and horizontal overflow.
 

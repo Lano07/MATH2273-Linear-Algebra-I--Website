@@ -1,9 +1,10 @@
-/* End-to-end, regression and responsive tests in headless Chromium (Playwright).
+/* End-to-end, regression and responsive tests in a headless browser (Playwright).
    Usage: node tests/e2e.js            (needs `playwright`: npm i -D playwright && npx playwright install chromium)
-          BROWSER=firefox node tests/e2e.js   (or webkit) for cross-browser runs
-   Checks: every route renders without console errors, KaTeX errors or unrendered "$"; no horizontal page overflow at
-   390 / 820 / 1440 px; key user flows (practice, retry queue, exams, flashcards, notes, counterexamples, examiner,
-   export data, saved-progress migration). Exit code 1 on any failure. */
+          BROWSER=firefox node tests/e2e.js   (or webkit) for cross-browser runs; ISOLATE=1 = fresh tab per check
+   Checks: every route renders without console errors, KaTeX errors, unrendered "$" or invalid MathML; no horizontal
+   page overflow at 390 / 820 / 1440 px (failures name the elements that stick out); key user flows (practice, retry
+   queue, exams, flashcards, notes, counterexamples, examiner, export data, saved-progress migration), each a guarded
+   step with a time limit. Exit code 1 on any failure. */
 "use strict";
 const pw = require("playwright");
 const ENGINE = process.env.BROWSER || "chromium"; // chromium | firefox | webkit
@@ -14,7 +15,7 @@ const { start } = require("./serve");
 
 let pass = 0, fail = 0; const failures = [];
 // never let a hung page stall the run (page.evaluate has no timeout of its own)
-const within = (p, ms, what) => Promise.race([p, new Promise((_, rej) => setTimeout(() => rej(new Error("timed out: " + what)), ms))]);
+const within = (p, ms, what) => { let t; return Promise.race([p, new Promise((_, rej) => { t = setTimeout(() => rej(new Error("timed out: " + what)), ms); })]).finally(() => clearTimeout(t)); }; // cleared, so node exits as soon as the run ends
 const ok = (cond, name) => { if (cond) pass++; else { fail++; failures.push(name); console.log("FAIL: " + name); } };
 
 async function audit(page) {
