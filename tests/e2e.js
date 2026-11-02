@@ -33,15 +33,15 @@ async function audit(page) {
     if (over) {
       const desc = (el) => el.tagName.toLowerCase() + (el.id ? "#" + el.id : "") + (typeof el.className === "string" && el.className.trim() ? "." + el.className.trim().split(/\s+/).slice(0, 2).join(".") : "");
       const clipped = (el) => { for (let p = el.parentElement; p && p !== document.body; p = p.parentElement) if (getComputedStyle(p).overflowX !== "visible") return true; return false; };
-      const list = [];
+      const list = [], hidden = [];
       for (const el of document.body.querySelectorAll("*")) {
         const b = el.getBoundingClientRect(); if (!b.width || b.right <= cw + 1) continue;
         const par = el.parentElement; if (par && par !== document.body && par.getBoundingClientRect().right > cw + 1) continue;
-        if (clipped(el)) continue;
-        const s = getComputedStyle(el); list.push(desc(el) + " [" + s.position + (s.whiteSpace === "nowrap" ? ", nowrap" : "") + "] x " + Math.round(b.left) + ".." + Math.round(b.right));
-        if (list.length >= 4) break;
+        const s = getComputedStyle(el), d = desc(el) + " [" + s.position + (s.whiteSpace === "nowrap" ? ", nowrap" : "") + "] x " + Math.round(b.left) + ".." + Math.round(b.right);
+        if (clipped(el)) { if (hidden.length < 4) hidden.push(d); continue; }
+        list.push(d); if (list.length >= 4) break;
       }
-      why = "scrollWidth " + de.scrollWidth + " > clientWidth " + cw + " (innerWidth " + innerWidth + ", body " + document.body.scrollWidth + "); sticking out: " + (list.join("; ") || "nothing inside <body>");
+      why = "scrollWidth " + de.scrollWidth + " > clientWidth " + cw + " (innerWidth " + innerWidth + ", body " + document.body.scrollWidth + "); sticking out: " + (list.join("; ") || "nothing unclipped; inside overflow:hidden: " + (hidden.join("; ") || "none"));
     }
     // MathML validity (Firefox/Safari reject e.g. an <msub> with 3 children; screen readers read the MathML)
     const need = { msub: 2, msup: 2, msubsup: 3, munder: 2, mover: 2, munderover: 3, mfrac: 2, mroot: 2 }; const badML = [];
@@ -103,7 +103,11 @@ async function audit(page) {
   // one guarded step: any error or stall is recorded as a failure and the run continues on a fresh page
   const step = async (name, fn, ms) => {
     try { await within(fn(), ms || 60000, name); }
-    catch (e) { ok(false, name + " failed: " + e.message.split("\n")[0]); try { await page.close(); } catch (e2) { /* already gone */ } await fresh(); }
+    catch (e) {
+      const lines = String(e.message).split("\n").map((l) => l.trim()).filter(Boolean);
+      ok(false, name + " failed: " + lines[0] + (lines.length > 1 ? " | " + lines.slice(-4).join(" | ") : "")); // Playwright's call log says why
+      try { await page.close(); } catch (e2) { /* already gone */ } await fresh();
+    }
   };
 
   /* 2. responsive: no horizontal overflow on key pages */
@@ -120,7 +124,18 @@ async function audit(page) {
   // phone sweep over every chapter, lab and topic page
   const phone = dyn.chapters.map((n) => "/ch/" + n).concat(dyn.pages.filter((p) => p.startsWith("/labs/")), dyn.topics.map((t) => "/learn/" + t + "?mode=understand"), dyn.topics.map((t) => "/learn/" + t + "?mode=practise"));
   for (const r of phone) await fits(390, r);
-  console.log("responsive checks: " + (keyPages.length * 3 + phone.length));
+  // live resize: load wide, then shrink to phone width (rotating a phone to portrait, narrowing a desktop window)
+  const shrinkPages = ["/", "/ch/3", "/labs/quadratic", "/settings"];
+  for (const r of shrinkPages) await step("live resize 1280→390 on " + r, async () => {
+    if (ISOLATE) { try { await page.close(); } catch (e) { /* ignore */ } await fresh(); }
+    await page.setViewportSize({ width: 1280, height: 860 }); await go(r, 500);
+    await page.setViewportSize({ width: 390, height: 860 }); await page.waitForTimeout(900);
+    const a = await within(audit(page), 15000, "audit " + r);
+    ok(!a.over, "no horizontal overflow after shrinking 1280→390 on " + r + (a.over ? " — " + a.why : ""));
+    await go("/notes", 300); const b = await within(audit(page), 15000, "audit /notes");
+    ok(!b.over, "no horizontal overflow on the next page after shrinking (" + r + " → /notes)" + (b.over ? " — " + b.why : ""));
+  });
+  console.log("responsive checks: " + (keyPages.length * 3 + phone.length + shrinkPages.length * 2));
   if (ISOLATE) { try { await page.close(); } catch (e) { /* ignore */ } await fresh(); }
   await page.setViewportSize({ width: 1280, height: 900 });
 

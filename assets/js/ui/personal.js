@@ -51,6 +51,9 @@
       hlBtn = LA.h('<div class="hl-pop" role="toolbar" aria-label="Highlight"><button class="btn btn-sm" data-h="1">🖍 Highlight</button><button class="btn btn-sm" data-h="2">🖍 + note</button></div>');
       hlBtn.style.top = (window.scrollY + r.top - 44) + "px"; hlBtn.style.left = (window.scrollX + r.left) + "px";
       document.body.appendChild(hlBtn);
+      // keep the toolbar on screen when the selection is near the right edge (narrow windows)
+      const maxLeft = window.scrollX + document.documentElement.clientWidth - hlBtn.offsetWidth - 8;
+      hlBtn.style.left = Math.max(window.scrollX + 8, Math.min(window.scrollX + r.left, maxLeft)) + "px";
       $$("[data-h]", hlBtn).forEach((b) => b.addEventListener("click", () => {
         const { path } = LA.parseHash(); const key = path + "#" + s.sec.id;
         if (s.text.includes("\n") || s.sel.getRangeAt(0).cloneContents().querySelector(".katex")) { LA.toast("Highlight plain text", "Select text within one paragraph (formulas can't be highlighted — bookmark the box instead)."); hideHL(); return; }

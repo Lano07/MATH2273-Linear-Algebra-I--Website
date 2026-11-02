@@ -278,7 +278,7 @@ label.field { display: flex; flex-direction: column; gap: 5px; font-size: .84rem
 
 /* ---------- Content boxes (definitions, theorems ...) ---------- */
 .lesson { font-size: 1.01rem; }
-.lesson section { scroll-margin-top: calc(var(--header-h) + 16px); }
+.lesson section { scroll-margin-top: 4px; } /* + html scroll-padding-top (header + 12px) = 80px below the top, as before */
 .lesson h2 { padding-top: .4em; border-top: 1px solid var(--border); }
 .lesson h2:first-of-type { border-top: 0; }
 .lesson h2 .sec-num { color: var(--violet); margin-right: .35em; }
@@ -673,6 +673,7 @@ select[multiple] { max-width: 100%; }
 @media (max-width: 480px) { #focusBtn, #settingsBtn, .header .streak { display: none; } .header { gap: 6px; } }
 .header { min-width: 0; }
 html { scrollbar-gutter: stable; } /* layout width doesn't jump when a classic scrollbar appears */
+html { scroll-padding-top: calc(var(--header-h) + 12px); } /* focused / scrolled-to elements land below the sticky header, not under it */
 /* long button labels wrap instead of being clipped or pushing the page sideways (e.g. "▶ Continue: 3.1 Introduction: …" on a phone) */
 .btn { max-width: 100%; }
 @media (max-width: 760px) { .btn { white-space: normal; text-align: center; } }
