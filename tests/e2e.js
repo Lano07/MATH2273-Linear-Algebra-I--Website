@@ -18,12 +18,14 @@ async function audit(page) {
   return page.evaluate(() => {
     const v = document.getElementById("view");
     const kerr = v.querySelectorAll(".katex-error").length;
-    const tw = document.createTreeWalker(v, NodeFilter.SHOW_TEXT); let raw = 0, n;
-    while ((n = tw.nextNode())) if (/\$/.test(n.nodeValue) && !n.parentElement.closest("code,pre,textarea,input,script,.katex,.mono,.mono-in")) raw++;
+    // one pass; skip whole subtrees of rendered maths / code (fast even on very large pages)
+    const SKIP = ".katex, code, pre, textarea, input, script, .mono, .mono-in";
+    const tw = document.createTreeWalker(v, NodeFilter.SHOW_ELEMENT | NodeFilter.SHOW_TEXT, { acceptNode: (x) => (x.nodeType === 1 ? (x.matches(SKIP) ? NodeFilter.FILTER_REJECT : NodeFilter.FILTER_SKIP) : x.nodeValue.indexOf("$") >= 0 ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_SKIP) });
+    let raw = 0; while (tw.nextNode()) raw++;
     const over = document.documentElement.scrollWidth > document.documentElement.clientWidth + 1;
     // MathML validity (Firefox/Safari reject e.g. an <msub> with 3 children; screen readers read the MathML)
     const need = { msub: 2, msup: 2, msubsup: 3, munder: 2, mover: 2, munderover: 3, mfrac: 2, mroot: 2 }; const badML = [];
-    v.querySelectorAll("math").forEach((m) => m.querySelectorAll(Object.keys(need).join(",")).forEach((el) => { if (el.children.length !== need[el.localName]) { const a = m.querySelector("annotation"); badML.push(el.localName + ": " + (a ? a.textContent : "").slice(0, 60)); } }));
+    v.querySelectorAll(Object.keys(need).map((t) => "math " + t).join(",")).forEach((el) => { if (el.children.length !== need[el.localName]) { const a = el.closest("math").querySelector("annotation"); badML.push(el.localName + ": " + (a ? a.textContent : "").slice(0, 60)); } });
     return { kerr, raw, over, text: v.innerText.length, badML };
   });
 }
@@ -67,6 +69,7 @@ async function audit(page) {
   for (const r of routes) {
     if (++k % 50 === 0) console.log("… " + k + " routes (" + r + ")");
     let a;
+    if (ENGINE !== "chromium") { try { await page.close(); } catch (e) { /* ignore */ } await fresh(); } // isolate pages so one problem can't cascade
     try { await go(r, /visualise|labs|quadratic/.test(r) ? 380 : 200); a = await within(audit(page), 15000, "audit " + r); }
     catch (e) { ok(false, "route " + r + " failed: " + e.message.split("\n")[0]); try { await page.close(); } catch (e2) { /* already gone */ } await fresh(); await page.goto(base + "#/"); await page.waitForTimeout(300); continue; }
     ok(!errs.length, "no console errors on " + r + (errs.length ? ": " + errs[0].slice(0, 120) : ""));

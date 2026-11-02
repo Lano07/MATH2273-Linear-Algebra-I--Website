@@ -672,3 +672,4 @@ select[multiple] { max-width: 100%; }
 /* narrow phones: keep the header within the viewport (focus mode & settings stay reachable via F / the menu) */
 @media (max-width: 480px) { #focusBtn, #settingsBtn, .header .streak { display: none; } .header { gap: 6px; } }
 .header { min-width: 0; }
+html { scrollbar-gutter: stable; } /* layout width doesn't jump when a classic scrollbar appears */

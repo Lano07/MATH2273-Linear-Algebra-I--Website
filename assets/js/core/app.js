@@ -397,7 +397,16 @@
 
   /* ---------------- Shared UI snippets ---------------- */
   // one resize handler per page (replaced on navigation, so listeners never pile up)
-  LA.setResize = function (fn) { if (LA._rs) window.removeEventListener("resize", LA._rs); LA._rs = fn; if (fn) window.addEventListener("resize", fn, { passive: true }); };
+  // Lab canvases redraw on resize — but only when the window WIDTH really changes, debounced. This avoids
+  // feedback loops with classic scrollbars (canvas grows → scrollbar appears → narrower → …) and needless
+  // redraws on phones when the address bar shows/hides (height-only resizes).
+  LA.setResize = function (fn) {
+    if (LA._rs) window.removeEventListener("resize", LA._rs);
+    LA._rs = null; if (!fn) return;
+    let lastW = window.innerWidth, tm = null;
+    LA._rs = () => { if (window.innerWidth === lastW) return; lastW = window.innerWidth; clearTimeout(tm); tm = setTimeout(fn, 120); };
+    window.addEventListener("resize", LA._rs, { passive: true });
+  };
   LA.ring = (pct, label) => '<div class="ring" style="--p:' + pct + '"><span>' + (label === undefined ? pct + "%" : label) + "</span></div>";
   LA.sectionTitle = (t) => '<div class="section-title"><h2>' + t + "</h2></div>";
 
