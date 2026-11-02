@@ -32,13 +32,17 @@ async function audit(page) {
   const browser = await pw[ENGINE].launch();
   console.log("browser: " + ENGINE);
   const ctx = await browser.newContext({ viewport: { width: 1280, height: 900 } });
-  const page = await ctx.newPage();
-  const errs = [];
-  page.on("pageerror", (e) => errs.push(e.message));
-  page.on("console", (m) => { if (m.type() === "error") errs.push(m.text()); });
-  page.on("dialog", (d) => d.accept("note"));
+  const errs = []; let page, current = "";
+  const fresh = async () => {
+    page = await ctx.newPage();
+    page.on("pageerror", (e) => errs.push(e.message));
+    page.on("console", (m) => { if (m.type() === "error") errs.push(m.text()); });
+    page.on("dialog", (d) => d.accept("note"));
+    page.on("crash", () => { ok(false, "page crashed on " + current); console.log("CRASH on " + current); });
+  };
+  await fresh();
   // hash navigation inside the already-loaded app (WebKit never fires "load" for same-document page.goto)
-  const go = async (h, wait) => { errs.length = 0; if (page.url().startsWith(base)) await page.evaluate((x) => LA.go("#" + x), h); else await page.goto(base + "#" + h); await page.waitForTimeout(wait || 220); };
+  const go = async (h, wait) => { errs.length = 0; current = h; if (page.isClosed()) await fresh(); if (page.url().startsWith(base)) await page.evaluate((x) => LA.go("#" + x), h); else await page.goto(base + "#" + h); await page.waitForTimeout(wait || 220); };
 
   /* 1. every route */
   await page.goto(base + "#/"); await page.waitForTimeout(300);
@@ -57,9 +61,12 @@ async function audit(page) {
   dyn.mocks.forEach((m) => routes.push("/mock/" + m));
   dyn.topics.slice(0, 6).forEach((t) => routes.push("/print/topic/" + t));
   ["theorems", "definitions", "proofs", "formulas", "counterexamples", "mistakes", "notation", "recipes"].forEach((t) => routes.push("/encyclopedia?tab=" + t));
+  let k = 0;
   for (const r of routes) {
-    await go(r, /visualise|labs|quadratic/.test(r) ? 380 : 200);
-    const a = await audit(page);
+    if (++k % 50 === 0) console.log("… " + k + " routes (" + r + ")");
+    let a;
+    try { await go(r, /visualise|labs|quadratic/.test(r) ? 380 : 200); a = await audit(page); }
+    catch (e) { ok(false, "route " + r + " failed: " + e.message.split("\n")[0]); try { await page.close(); } catch (e2) { /* already gone */ } await fresh(); await page.goto(base + "#/"); await page.waitForTimeout(300); continue; }
     ok(!errs.length, "no console errors on " + r + (errs.length ? ": " + errs[0].slice(0, 120) : ""));
     ok(a.kerr === 0, "no KaTeX errors on " + r);
     ok(a.raw === 0, "no unrendered $ on " + r);
