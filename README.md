@@ -1,51 +1,83 @@
 # MATH2273 Linear Algebra I — The Ultimate Study Hub
 
-An interactive study website for **MATH 2273 Linear Algebra I** (The University of the West Indies), built line-by-line from the course notes (*Chapters 1–7*, V. Job) and the *Gram–Schmidt* handout. **Chapters 3 (Linear Transformations) and 4 (Inner Product Spaces & Orthogonality) are covered in maximum depth** for coursework preparation.
+An interactive study website for **MATH 2273 Linear Algebra I** (The University of the West Indies, St. Augustine). It is built line by line from the course notes (*Chapters 1–7*, V. Job) and the *Gram–Schmidt* handout, and extended to the full official course outline. Static, offline-capable and free: no accounts, no paid services, no build step.
 
-> Unofficial study aid — not affiliated with or endorsed by The University of the West Indies.
+> Unofficial study aid — not affiliated with or endorsed by The University of the West Indies. Your lecture notes and your lecturer remain the authority on what is examinable.
 
-## What's inside
+**Live site:** <https://lano07.github.io/MATH2273-Linear-Algebra-I--Website/>
+
+## What's inside (v2)
 
 | Area | What you get |
 |---|---|
-| **Lessons (Ch 1–7)** | Every definition, theorem and example from the notes (same numbering), plus plain-English intuition, *Tip*, *Exam trap*, *Proof template* and *Beyond the notes* boxes, step-by-step reveals, and proofs of the results the notes leave as exercises. |
-| **Exercises + full solutions** | Model solutions to **every** exercise in the notes, plus extra exam-style questions. All answers were cross-checked with a computer algebra system (SymPy). |
-| **Coursework Battle Plan** | 7-day plan for Chapters 3 & 4, topic-confidence tracker, live countdown, and exam-room strategy. |
-| **Question Recipes** | A short, reliable algorithm for every question type, with a mini-example and the trap that costs marks. |
-| **Proof Studio** | Golden rules of proof writing, a logic toolkit, fill-in-the-blank templates, and interactive proof puzzles (put the lines in order and leave out the decoy). |
-| **Practice Arena** | 12 random problem generators (linearity, basis images, kernel/range, matrix of T, inverses, Gram–Schmidt in ℝⁿ and ℙₙ, S⊥, norms/angles, inner-product checks, …) with complete worked solutions computed exactly. |
-| **Quizzes · Flashcards · Mock tests** | ~90 concept questions with explanations, ~70 spaced-repetition flashcards, and 3 timed mock coursework papers with marking schemes for self-marking. |
-| **Interactive labs** | 2D transformation visualizer, linearity checker (auto-proof or counterexample), kernel/range/rank–nullity analyzer, matrix-of-T builder (ℝⁿ and polynomial spaces), Gram–Schmidt machine (any weighted or integral inner product), 3D orthogonality visualizer, inner product lab (Gram-matrix test), row-reduction stepper, determinant lab, eigen lab (incl. complex eigenvalues and Cayley–Hamilton inverses). All computations use exact fractions. |
-| **Reference** | Printable formula & theorem sheet, glossary & notation decoder, past-paper hub with a personal question log, "Beyond the notes", and a corrections page listing slips found in the notes. |
-| **Motivation** | XP, levels, badges, daily streaks, confetti — progress saved locally in your browser. Dark and light themes. |
+| **Lessons (Ch 1–8)** | Every definition, theorem and example from the notes (same numbering), plus intuition, tips, exam traps, proof templates and 21 extra proofs. Each chapter ends with a **deep dive** (why it matters, the geometric picture, a counterexample gallery, connections and levelled practice). A **depth filter** shows *Foundation*, *University Standard* or *Everything*; enrichment is clearly labelled. |
+| **Syllabus additions** | **Chapter 8 – Quadratic forms & orthogonal diagonalization** and **§5.3 Rank and equivalence** fill the two syllabus topics the notes don't cover. The **Syllabus Coverage** page quotes the official course description and shows where every topic lives. |
+| **Topic Studio** | 34 topics, each in five connected modes — **Understand · Visualise · Prove · Practise · Exam** — with split view, prerequisites and "leads to" links. Your place in each mode is kept when you switch. |
+| **Adaptive Practice Arena** | 68 seeded question generators covering every topic, 4 difficulty levels, answers checked for **mathematical equivalence** (exact fractions and surds, any correct basis, any eigenvector multiple, polynomial identity…), 4-step progressive hints, full worked solutions, a mistake log with a **retry queue**, permanent links to every problem, and a math symbol keyboard. The original practice page remains as *Classic*. |
+| **Proof Studio** | Proof templates and puzzles (v1), plus the **Proof Examiner** (write a proof in LaTeX or plain text; a transparent rubric checklist flags missing steps, conclusion-only answers and proof-by-example; compare with the model proof and self-mark), 41 **proof drills** (fill the blank, missing assumption, justify the step, choose the strategy, debug the proof) and the **Counterexample Lab** (21 false claims with exact verifiers). |
+| **Exam Centre** | 2-hour ~100-mark **final exam simulation** (the official format is one 2-hour written paper), Ch 3 & 4 coursework simulation, chapter tests, proof-heavy papers, computational sprints and a custom builder. Timed runner, component-based marking (method, accuracy, justification, proof structure, notation, completeness, final answer), reports by component/topic/question, history and trends. The three original mocks are unchanged. |
+| **Flashcards** | Spaced repetition (SM-2) with real due dates, daily queue, new-card limit, weak-chapter priority, recall history, proof-reconstruction cards (write an outline before revealing), and your own cards. Only honest ratings count — opening a card never does. |
+| **Labs (14)** | 2D transformations, linearity checker, kernel/range, matrix of T, Gram–Schmidt machine and **Gram–Schmidt Studio** (animated, 2D/3D, prediction challenges), 3D orthogonality, inner products, row reduction, determinants, eigen lab, **Change-of-Basis Lab**, **Quadratic Forms Lab** (level curves, principal axes, definiteness, 3D surface) and a **Matrix Calculator** with elementary matrices. Every lab shows its formulas and links to the lesson. All algebra is exact. |
+| **Encyclopedia** | Definitions, theorem library, proof library, formulas, counterexamples, 32 common mistakes, notation and recipes; **50 theorem pages** (statement and proof from the lessons, plain English, assumptions, what breaks without them, mistakes, applications); an interactive **concept map** coloured by your mastery. |
+| **Smart dashboard** | Mastery (from answered questions only) shown separately from activity (XP, sections read): practice accuracy, proof self-marks, exams, flashcard recall, open mistakes, weekly improvement, a revision heatmap, weak concepts and recommendations. XP, levels and badges are kept. |
+| **Personal tools** | Bookmarks (☆ on any box), notes under every section/topic/theorem, text highlights with annotations, *My Notes* page, focus mode, text size / line spacing / motion settings, keyboard shortcuts (<kbd>?</kbd>), print sheets (formulas, proofs, topics, notes). |
+| **Reference** | Formula & theorem sheet, glossary & notation, past-paper hub with a detailed log (year, semester, question, topics, difficulty, attempts, marks, mistakes, revision notes), corrections to the notes. |
 
 ## Using it
 
-* **Online (GitHub Pages):** in the repository settings choose *Settings → Pages → Build and deployment → Deploy from a branch*, pick the branch (e.g. `main`) and folder `/ (root)`. The site is then served at `https://<your-username>.github.io/<repository-name>/`.
-* **Offline:** download/clone the repository and open `index.html` in any modern browser. Fonts and the maths renderer (KaTeX) are bundled, so no internet connection is needed.
-* Keyboard: <kbd>Ctrl</kbd>+<kbd>K</kbd> or <kbd>/</kbd> opens search; flashcards use <kbd>Space</kbd> and <kbd>1</kbd>–<kbd>4</kbd>.
-* Progress (XP, completed sections, scores, flashcard boxes, past-paper log) lives in `localStorage`. Use *Progress & Badges → Export* to back it up or move it to another device.
+* **Online (GitHub Pages):** *Settings → Pages → Build and deployment → Deploy from a branch*, choose `main` and `/ (root)`. The site is served at `https://<user>.github.io/<repository>/`.
+* **Offline:** clone or download the repository and open `index.html` in a modern browser (Chrome, Edge, Firefox, Safari from 2021 on — exact arithmetic uses `BigInt`). Fonts and KaTeX are bundled.
+* **Keyboard:** <kbd>Ctrl</kbd>+<kbd>K</kbd> or <kbd>/</kbd> search · <kbd>F</kbd> focus mode · <kbd>?</kbd> shortcuts · <kbd>Enter</kbd> check an answer · <kbd>1</kbd>–<kbd>4</kbd> rate a flashcard · first <kbd>Tab</kbd> offers *Skip to content*.
+
+## Your data
+
+Everything (progress, answers, mastery evidence, mistakes, flashcard schedules, exam history, notes, highlights, past-paper log, settings) is stored in your browser's `localStorage` under `la2273:*` keys. Nothing is sent anywhere. Use **Progress, Badges & Data → Export** to back up or move to another device, and **Import** to restore. Data saved by version 1 (sections completed, flashcard boxes, past-paper log, quiz scores, XP) is migrated automatically.
+
+There is no AI tutor and no API key in this project: every feature works offline with deterministic, exact mathematics.
 
 ## Past papers
 
-Official MATH 2273 past papers are held by The Alma Jordan Library (UWI St. Augustine): <https://libraries.sta.uwi.edu/apps/pastpapers>. Access requires accepting the library's Appropriate Use Policy (personal, non-commercial study). This site links to the archive rather than re-publishing the papers; use the **Past Papers → My past-paper log** page to record questions and track which topics appear most.
+Official MATH 2273 past papers are held by The Alma Jordan Library (UWI St. Augustine): <https://libraries.sta.uwi.edu/apps/pastpapers>. Access requires accepting the library's Appropriate Use Policy (personal, non-commercial study). This site does **not** re-publish the papers; it links to the archive and lets you keep your own log.
+
+## Tests
+
+```bash
+node tests/run-unit.js          # unit + mathematical regression tests (no browser needed)
+npm install && npx playwright install chromium
+node tests/e2e.js               # every route, responsive checks (390/820/1440 px), user flows
+```
+
+The unit suite runs every generator at every difficulty over many seeds (the model answer must pass its own checker, every formula must compile in KaTeX), tests the answer-equivalence engine, the Proof Examiner heuristics, the counterexample verifiers, the exam bank (marks add up; exams hit their mark targets and are reproducible) and the spaced-repetition scheduler. The end-to-end suite renders all ~340 routes and checks for console errors, KaTeX errors, unrendered maths and horizontal overflow.
 
 ## Project structure
 
 ```
-index.html                 single-page app shell (hash routing, works from file://)
-assets/css/main.css        design system (dark "neon glass" + light theme, print styles)
-assets/js/core/            math.js (exact fractions, surds, polynomials, matrices, row reduction),
-                           parse.js (formula parser), app.js (router, search, XP/badges, UI)
-assets/js/content/         chapter lessons, exercises and summaries (ch1.js … ch7.js)
-assets/js/data/            quiz bank, flashcards, mock tests, proof puzzles
-assets/js/pages/           dashboard, plan, recipes, proof studio, study engines, reference pages
-assets/js/tools/           interactive labs
-assets/js/practice/        practice-arena generators
-assets/vendor/, assets/fonts/   KaTeX, canvas-confetti, Inter, Space Grotesk, JetBrains Mono
+index.html                     app shell (hash routing; works from file:// and GitHub Pages)
+assets/css/main.css            design system (dark "neon glass" + light theme, print, focus mode)
+assets/js/core/                math.js (exact fractions, surds, polynomials, matrices), parse.js, rng.js (seeded),
+                               answers.js (answer equivalence), app.js (router, search, XP), mastery.js, topics.js
+assets/js/content/             lessons ch1.js … ch8.js, additions.js (§5.3), deep.js (deep dives)
+assets/js/data/                quizzes, flashcards, mocks, proof puzzles
+assets/js/practice/            bank-*.js (68 generators), arena.js (Practice Arena), generators.js (classic)
+assets/js/learn/               studio.js (Topic Studio), proofexam.js, drills.js, counter.js
+assets/js/exam/                bank.js (written questions + schemes), exams.js (Exam Centre)
+assets/js/study/srs.js         spaced-repetition flashcards
+assets/js/pages/               home, chapter, dashboard, encyclopedia, concept map, past papers, syllabus, reference…
+assets/js/tools/               labs (+ plane.js canvas helper)
+assets/js/ui/                  keyboard.js (math keys), labmeta.js, personal.js (notes, bookmarks, settings, search)
+tests/                         run-unit.js + unit/*.test.js, e2e.js, serve.js, harness.js
+docs/ARCHITECTURE.md           how the pieces fit together and how to add content
 ```
 
-No build step: edit the JavaScript files directly. Maths is written in LaTeX inside `String.raw` templates and rendered by KaTeX.
+See [CHANGELOG.md](CHANGELOG.md) for what changed in v2 and [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) for the internals.
+
+## Known limitations
+
+* The automatic proof checker is a keyword/structure checklist — it cannot verify logical validity; your self-mark against the rubric is what counts.
+* Written exam answers are self-marked against the marking schemes; only computational answers are auto-checked.
+* Chapter 8 and §5.3 were written for this site from standard textbooks (Anton & Rorres, Strang, Axler); their numbering is the site's own.
+* Progress is per browser/device unless you export and import it; there are no accounts or cloud sync.
+* Automated browser tests run in Chromium; other modern browsers are expected to work but are not in the automated suite.
 
 ## Credits & licences
 

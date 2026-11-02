@@ -246,7 +246,9 @@
   /* ---------------- Layout & nav ---------------- */
   LA.NAV = [
     { title: "Start", items: [
-      { href: "#/", ico: "🏠", label: "Dashboard" },
+      { href: "#/", ico: "🏠", label: "Home" },
+      { href: "#/dashboard", ico: "📊", label: "Smart Dashboard" },
+      { href: "#/notes", ico: "📝", label: "My Notes & Bookmarks" },
       { href: "#/plan", ico: "🎯", label: "Coursework Battle Plan", badge: "CH 3·4" },
     ] },
     { title: "Learn — Chapters", items: "CHAPTERS" },
@@ -290,7 +292,9 @@
       { href: "#/beyond", ico: "🚀", label: "Beyond the Notes" },
       { href: "#/syllabus", ico: "🧭", label: "Syllabus Coverage" },
       { href: "#/errata", ico: "🩹", label: "Notes Corrections" },
-      { href: "#/progress", ico: "🏆", label: "Progress & Badges" },
+      { href: "#/print", ico: "🖨️", label: "Print Sheets" },
+      { href: "#/progress", ico: "🏆", label: "Progress, Badges & Data" },
+      { href: "#/settings", ico: "⚙️", label: "Settings & Accessibility" },
     ] },
   ];
   function chapterNavItems() {
@@ -326,7 +330,8 @@
 
   /* ---------------- Search palette ---------------- */
   let INDEX = null;
-  function stripTex(s) { return s.replace(/\\[a-zA-Z]+/g, " ").replace(/[{}$^_\\]/g, " ").replace(/\s+/g, " ").trim(); }
+  const KEEP = { det: 1, ker: 1, dim: 1, Rank: 1, Nullity: 1, Null: 1, Ran: 1, spn: "span", span: 1, tr: 1, diag: 1, lambda: 1, perp: 1, sqrt: 1 };
+  function stripTex(s) { return s.replace(/\\([a-zA-Z]+)/g, (m0, w) => (KEEP[w] ? " " + (KEEP[w] === 1 ? w : KEEP[w]) + " " : " ")).replace(/[{}$^_\\]/g, " ").replace(/\s+/g, " ").trim(); }
   function buildIndex() {
     const idx = [];
     const tmp = document.createElement("div");

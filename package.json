@@ -1,0 +1,15 @@
+{
+  "name": "math2273-linear-algebra-study-hub",
+  "version": "2.0.0",
+  "private": true,
+  "description": "Interactive study hub for MATH2273 Linear Algebra I (static site; no build step).",
+  "scripts": {
+    "serve": "node tests/serve.js 8123",
+    "test:unit": "node tests/run-unit.js",
+    "test:e2e": "node tests/e2e.js",
+    "test": "node tests/run-unit.js && node tests/e2e.js"
+  },
+  "devDependencies": {
+    "playwright": "^1.63.0"
+  }
+}
