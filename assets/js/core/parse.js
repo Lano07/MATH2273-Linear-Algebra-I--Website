@@ -122,8 +122,8 @@
   function mpConst(n, c) { const m = new Map(); if (!c.isZero()) m.set(new Array(n).fill(0).join(","), c); return m; }
   function mpVar(n, i) { const e = new Array(n).fill(0); e[i] = 1; return new Map([[e.join(","), Frac.ONE]]); }
   function mpAdd(a, b, sgn) { const r = new Map(a); b.forEach((c, k) => { const v = (r.get(k) || Frac.ZERO).add(sgn < 0 ? c.neg() : c); if (v.isZero()) r.delete(k); else r.set(k, v); }); return r; }
-  function mpMul(a, b) { const r = new Map(); a.forEach((c1, k1) => b.forEach((c2, k2) => { const e1 = k1.split(",").map(Number), e2 = k2.split(",").map(Number); const k = e1.map((x, i) => x + e2[i]).join(","); const v = (r.get(k) || Frac.ZERO).add(c1.mul(c2)); if (v.isZero()) r.delete(k); else r.set(k, v); })); return r; }
-  function mpIsConst(a) { for (const k of a.keys()) if (k.split(",").some((x) => x !== "0")) return false; return true; }
+  function mpMul(a, b) { const r = new Map(); a.forEach((c1, k1) => b.forEach((c2, k2) => { const e1 = k1 === "" ? [] : k1.split(",").map(Number), e2 = k2 === "" ? [] : k2.split(",").map(Number); const k = e1.map((x, i) => x + e2[i]).join(","); const v = (r.get(k) || Frac.ZERO).add(c1.mul(c2)); if (v.isZero()) r.delete(k); else r.set(k, v); })); return r; }
+  function mpIsConst(a) { for (const k of a.keys()) if (k !== "" && k.split(",").some((x) => x !== "0")) return false; return true; }
   function mpConstVal(a) { let v = Frac.ZERO; a.forEach((c) => { v = v.add(c); }); return v; }
   function toMPoly(ast, vars) {
     const n = vars.length;

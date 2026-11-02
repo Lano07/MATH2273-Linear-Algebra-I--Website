@@ -180,12 +180,12 @@
 
   /* ------------------------------ page ------------------------------ */
   const GROUPS = [["mix", "🎯 Mixed Ch 3 & 4", Object.keys(G)], ["ch3", "Chapter 3 only", Object.keys(G).filter((k) => G[k].ch === 3)], ["ch4", "Chapter 4 only", Object.keys(G).filter((k) => G[k].ch === 4)]].concat(Object.keys(G).map((k) => [k, G[k].t, [k]]));
-  LA.page("/practice", {
-    title: "Practice Arena", searchTitle: "Practice Arena", searchDesc: "Unlimited random problems with full worked solutions",
+  LA.page("/practice/classic", {
+    title: "Classic Practice", searchTitle: "Classic Practice (v1)", searchDesc: "The original Chapter 3 & 4 practice generators",
     render(p, q) {
       const sel = q.t || "mix"; const st = LA.state.stats.practiceByType || {};
       return '<div class="page"><div class="hero"><div class="hero-content"><div class="kicker">Infinite practice · Chapters 3 & 4</div><h1>Practice Arena</h1><p class="lead">Every click makes a brand-new problem with a complete worked solution, computed exactly. Attempt it on paper first, then reveal the solution and mark yourself honestly.</p><div class="row"><span class="chip lime">Solved: ' + (LA.state.stats.practice || 0) + "</span></div></div></div>" +
-        '<div class="row" style="margin:16px 0">' + GROUPS.map((g) => '<a class="chip ' + (g[0] === sel ? "violet" : "") + '" href="#/practice?t=' + g[0] + '">' + g[1] + (st[g[0]] ? " · " + st[g[0]] : "") + "</a>").join("") + "</div>" +
+        '<div class="row" style="margin:16px 0">' + GROUPS.map((g) => '<a class="chip ' + (g[0] === sel ? "violet" : "") + '" href="#/practice/classic?t=' + g[0] + '">' + g[1] + (st[g[0]] ? " · " + st[g[0]] : "") + "</a>").join("") + "</div>" +
         '<div id="prob"></div></div>';
     },
     after(view, p, q) {

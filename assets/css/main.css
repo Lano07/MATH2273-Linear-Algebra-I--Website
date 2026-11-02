@@ -304,6 +304,66 @@ label.field { display: flex; flex-direction: column; gap: 5px; font-size: .84rem
 .box.errata { --c: var(--amber); }
 .qed { float: right; color: var(--muted); }
 .box .box { box-shadow: none; }
+/* Practice problems (v2) */
+.arena-grid { grid-template-columns: minmax(0, 1fr) 300px; align-items: start; }
+@media (max-width: 980px) { .arena-grid { grid-template-columns: 1fr; } }
+.problem .prob-head { gap: 8px; }
+.prob-q { font-size: 1.06rem; margin: 12px 0 6px; overflow-x: auto; }
+.part { margin: 10px 0; }
+.part-label { margin-bottom: 6px; }
+.ans-row { display: flex; gap: 8px; }
+.ans-in { width: 100%; }
+textarea.ans-in { min-height: 70px; resize: vertical; }
+.readas { min-height: 1.4em; margin-top: 4px; overflow-x: auto; }
+.part-fb { margin-top: 4px; font-size: .92rem; }
+.prob-actions { margin-top: 12px; gap: 8px; }
+.fb-main { margin-top: 10px; }
+.verdict { font-weight: 700; padding: 8px 12px; border-radius: 10px; display: inline-block; }
+.verdict.ok { color: var(--lime); background: rgba(163,230,53,.10); border: 1px solid rgba(163,230,53,.35); }
+.verdict.bad { color: var(--red); background: rgba(251,113,133,.08); border: 1px solid rgba(251,113,133,.3); }
+.quiz-opt.sel, .btn.tf.sel { border-color: var(--violet); box-shadow: inset 0 0 0 1px var(--violet); }
+.seed-link { font-family: var(--font-mono); }
+.mathkeys { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 10px; }
+.mathkeys .mk { font: inherit; font-size: .9rem; min-width: 36px; padding: 5px 8px; border-radius: 8px; border: 1px solid var(--border-strong); background: var(--panel-2); color: var(--text); cursor: pointer; }
+.mathkeys .mk:hover { border-color: var(--violet); }
+.hint-box { margin: 10px 0 0; }
+.log { overflow-x: auto; }
+/* Proof examiner */
+.pe-grid { align-items: start; }
+.proof-preview { min-height: 140px; margin-top: 8px; padding: 10px 12px; border-radius: 10px; background: var(--panel-2); border: 1px dashed var(--border-strong); overflow-x: auto; }
+.rubric { list-style: none; padding: 0; margin: 10px 0; }
+.rubric li { display: flex; gap: 10px; padding: 7px 0; border-bottom: 1px solid var(--border); }
+.rubric .ri { flex: none; width: 24px; height: 24px; border-radius: 7px; display: grid; place-items: center; font-weight: 800; }
+.rubric li.ok .ri { background: rgba(163,230,53,.18); color: var(--lime); }
+.rubric li.miss .ri { background: rgba(251,113,133,.14); color: var(--red); }
+.rubric li.self .ri { background: rgba(148,163,255,.14); color: var(--violet); }
+/* Topic Studio */
+.studio-head { position: relative; }
+.studio-modes { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 14px; padding: 5px; border-radius: 14px; background: var(--panel-2); border: 1px solid var(--border); }
+.mode-btn { font: inherit; font-weight: 650; font-size: .92rem; padding: 9px 14px; border-radius: 10px; border: 0; background: transparent; color: var(--text-2); cursor: pointer; }
+.mode-btn:hover { color: var(--text); background: rgba(148,163,255,.08); }
+.mode-btn.active { background: var(--grad); color: #0a0f1f; }
+.mode-btn.split-btn { margin-left: auto; }
+.mode-btn.split-btn[aria-pressed="true"] { box-shadow: inset 0 0 0 1px var(--violet); color: var(--text); }
+@media (max-width: 1099px) { .mode-btn.split-btn { display: none; } }
+.studio-panes { margin-top: 16px; }
+.studio-panes.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.studio-panes.split .studio-pane { max-height: calc(100vh - var(--header-h) - 40px); overflow: auto; position: sticky; top: calc(var(--header-h) + 12px); padding-right: 4px; }
+.studio-panes.split .studio-pane.left { order: -1; }
+.embedded-lab .page { padding: 0; max-width: none; }
+.embedded-lab .hero { display: none; }
+.topic-card b { font-family: var(--font-head); }
+/* Drills & counterexamples */
+.blank-in { width: auto; min-width: 90px; padding: 3px 8px; margin: 0 2px; }
+.blank-in.ok-in { border-color: var(--lime); }
+.blank-in.bad-in { border-color: var(--red); }
+.debug-lines { padding-left: 0; list-style: none; display: grid; gap: 8px; }
+.drill { margin-bottom: 14px; }
+.ce-card .ce-claim { font-size: 1.04rem; }
+.ce-in { display: flex; gap: 10px; align-items: center; margin: 6px 0; }
+.ce-in span { min-width: 130px; font-weight: 600; font-size: .9rem; }
+.ce-in input { flex: 1; }
+.ce-card.solved { border-color: rgba(163,230,53,.4); }
 /* Depth levels (Foundation / Standard / Enrichment) */
 .lvl-chip { margin-left: auto; font-size: .64rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 2px 9px; border-radius: 999px; border: 1px dashed var(--pink); color: var(--pink); white-space: nowrap; cursor: help; }
 .lesson[data-depth="f"] .box[data-level="s"], .lesson[data-depth="f"] .box[data-level="a"], .lesson[data-depth="s"] .box[data-level="a"] { display: none; }

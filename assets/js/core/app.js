@@ -29,6 +29,13 @@
   LA.shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 
   /* ---------------- Math rendering ---------------- */
+  LA.KATEX_MACROS = {
+    "\\R": "\\mathbb{R}", "\\C": "\\mathbb{C}", "\\N": "\\mathbb{N}", "\\Z": "\\mathbb{Z}", "\\Q": "\\mathbb{Q}", "\\FF": "\\mathbb{F}",
+    "\\P": "\\mathbb{P}", "\\Lin": "\\mathcal{L}", "\\B": "\\mathcal{B}", "\\Cc": "\\mathcal{C}",
+    "\\ip": "\\langle #1,#2\\rangle", "\\norm": "\\lVert #1\\rVert", "\\Ran": "\\operatorname{Ran}", "\\Null": "\\operatorname{Null}",
+    "\\Rank": "\\operatorname{Rank}", "\\Nullity": "\\operatorname{Nullity}", "\\spn": "\\operatorname{span}", "\\sign": "\\operatorname{sign}",
+    "\\tr": "\\operatorname{tr}", "\\diag": "\\operatorname{diag}", "\\RS": "\\operatorname{RS}", "\\CS": "\\operatorname{CS}",
+  };
   LA.renderMath = function (el) {
     if (!window.renderMathInElement || !el) return;
     try {
@@ -42,19 +49,13 @@
         throwOnError: false,
         strict: "ignore",
         trust: false,
-        macros: {
-          "\\R": "\\mathbb{R}", "\\C": "\\mathbb{C}", "\\N": "\\mathbb{N}", "\\Z": "\\mathbb{Z}", "\\Q": "\\mathbb{Q}", "\\FF": "\\mathbb{F}",
-          "\\P": "\\mathbb{P}", "\\Lin": "\\mathcal{L}", "\\B": "\\mathcal{B}", "\\Cc": "\\mathcal{C}",
-          "\\ip": "\\langle #1,#2\\rangle", "\\norm": "\\lVert #1\\rVert", "\\Ran": "\\operatorname{Ran}", "\\Null": "\\operatorname{Null}",
-          "\\Rank": "\\operatorname{Rank}", "\\Nullity": "\\operatorname{Nullity}", "\\spn": "\\operatorname{span}", "\\sign": "\\operatorname{sign}",
-          "\\tr": "\\operatorname{tr}", "\\diag": "\\operatorname{diag}", "\\RS": "\\operatorname{RS}", "\\CS": "\\operatorname{CS}",
-        },
+        macros: Object.assign({}, LA.KATEX_MACROS),
       });
     } catch (e) { console.warn("KaTeX render error", e); }
   };
   LA.tex = function (s, display) {
     if (!window.katex) return esc(s);
-    try { return window.katex.renderToString(s, { displayMode: !!display, throwOnError: false, strict: "ignore", macros: { "\\R": "\\mathbb{R}", "\\P": "\\mathbb{P}", "\\Lin": "\\mathcal{L}", "\\B": "\\mathcal{B}", "\\Cc": "\\mathcal{C}", "\\ip": "\\langle #1,#2\\rangle", "\\norm": "\\lVert #1\\rVert", "\\spn": "\\operatorname{span}", "\\Ran": "\\operatorname{Ran}", "\\Null": "\\operatorname{Null}" } }); }
+    try { return window.katex.renderToString(s, { displayMode: !!display, throwOnError: false, strict: "ignore", macros: Object.assign({}, LA.KATEX_MACROS) }); }
     catch (e) { return '<span class="err">' + esc(s) + "</span>"; }
   };
 
@@ -248,10 +249,16 @@
       { href: "#/plan", ico: "🎯", label: "Coursework Battle Plan", badge: "CH 3·4" },
     ] },
     { title: "Learn — Chapters", items: "CHAPTERS" },
+    { title: "Master It", items: [
+      { href: "#/learn", ico: "🎛️", label: "Topic Studio (5 modes)" },
+      { href: "#/practice", ico: "♾️", label: "Adaptive Practice Arena" },
+      { href: "#/proofs/examiner", ico: "🔎", label: "Proof Examiner" },
+      { href: "#/proofs/drills", ico: "🧩", label: "Proof Drills" },
+      { href: "#/counterexamples", ico: "🧪", label: "Counterexample Lab" },
+    ] },
     { title: "Coursework Prep", items: [
-      { href: "#/recipes", ico: "🧪", label: "Question Recipes" },
+      { href: "#/recipes", ico: "📋", label: "Question Recipes" },
       { href: "#/proofs", ico: "✍️", label: "Proof Studio" },
-      { href: "#/practice", ico: "♾️", label: "Practice Arena" },
       { href: "#/quiz", ico: "⚡", label: "Quizzes" },
       { href: "#/mock", ico: "⏱️", label: "Mock Tests" },
       { href: "#/flashcards", ico: "🃏", label: "Flashcards" },

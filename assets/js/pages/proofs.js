@@ -54,8 +54,11 @@
     ["Set equality", H`<p>($\subseteq$) Let $x\in A$. … so $x\in B$. ($\supseteq$) Let $x\in B$. … so $x\in A$. Hence $A = B$. $\square$</p>`],
   ];
 
-  function mountParsons(host) {
-    const list = LA.PARSONS;
+  LA.PROOF_TEMPLATES = TEMPLATES;
+  LA.mountParsons = mountParsons;
+  function mountParsons(host, ids) {
+    const list = ids && ids.length ? LA.PARSONS.filter((p) => ids.includes(p.id)) : LA.PARSONS;
+    if (!list.length) { host.innerHTML = '<p class="muted">No proof puzzles for this topic yet.</p>'; return; }
     const solved = LA.store.get("parsonsSolved", {});
     host.innerHTML = '<div class="row" style="margin-bottom:12px">' + list.map((p, i) => '<button class="chip ' + (solved[p.id] ? "lime" : "") + '" data-pi="' + i + '">' + (solved[p.id] ? "✓ " : "") + p.title + "</button>").join("") + '</div><div id="pz"></div>';
     $$("[data-pi]", host).forEach((b) => b.onclick = () => { $$("[data-pi]", host).forEach((x) => x.classList.toggle("on", x === b)); load(list[Number(b.dataset.pi)]); });
@@ -74,6 +77,8 @@
         $("#pzShow", pz).onclick = () => { ans.length = 0; p.lines.forEach((t) => ans.push(pool.findIndex((x) => x.t === t))); draw(true); $("#pzMsg", pz).innerHTML = '<span class="muted">Here is the correct order. The decoy was: <i>' + p.dis.join(" / ") + "</i></span>"; LA.renderMath($("#pzMsg", pz)); };
         $("#pzCheck", pz).onclick = () => {
           const correct = ans.length === p.lines.length && ans.every((i, k) => pool[i].ok && pool[i].t === p.lines[k]);
+          const tp = (LA.TOPICS || []).find((t) => (t.parsons || []).includes(p.id));
+          if (tp && LA.ev && !p._rec) { p._rec = true; LA.ev.record({ topic: tp.id, src: "drill", score: correct ? 1 : 0, gen: "parsons:" + p.id }); }
           draw(true);
           const msg = $("#pzMsg", pz);
           if (correct) {
