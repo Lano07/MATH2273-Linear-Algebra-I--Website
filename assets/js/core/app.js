@@ -29,6 +29,13 @@
   LA.shuffle = (arr) => { const a = arr.slice(); for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; };
 
   /* ---------------- Math rendering ---------------- */
+  LA.KATEX_MACROS = {
+    "\\R": "\\mathbb{R}", "\\C": "\\mathbb{C}", "\\N": "\\mathbb{N}", "\\Z": "\\mathbb{Z}", "\\Q": "\\mathbb{Q}", "\\FF": "\\mathbb{F}",
+    "\\P": "\\mathbb{P}", "\\Lin": "\\mathcal{L}", "\\B": "\\mathcal{B}", "\\Cc": "\\mathcal{C}",
+    "\\ip": "\\langle #1,#2\\rangle", "\\norm": "\\lVert #1\\rVert", "\\Ran": "\\operatorname{Ran}", "\\Null": "\\operatorname{Null}",
+    "\\Rank": "\\operatorname{Rank}", "\\Nullity": "\\operatorname{Nullity}", "\\spn": "\\operatorname{span}", "\\sign": "\\operatorname{sign}",
+    "\\tr": "\\operatorname{tr}", "\\diag": "\\operatorname{diag}", "\\RS": "\\operatorname{RS}", "\\CS": "\\operatorname{CS}",
+  };
   LA.renderMath = function (el) {
     if (!window.renderMathInElement || !el) return;
     try {
@@ -42,19 +49,13 @@
         throwOnError: false,
         strict: "ignore",
         trust: false,
-        macros: {
-          "\\R": "\\mathbb{R}", "\\C": "\\mathbb{C}", "\\N": "\\mathbb{N}", "\\Z": "\\mathbb{Z}", "\\Q": "\\mathbb{Q}", "\\FF": "\\mathbb{F}",
-          "\\P": "\\mathbb{P}", "\\Lin": "\\mathcal{L}", "\\B": "\\mathcal{B}", "\\Cc": "\\mathcal{C}",
-          "\\ip": "\\langle #1,#2\\rangle", "\\norm": "\\lVert #1\\rVert", "\\Ran": "\\operatorname{Ran}", "\\Null": "\\operatorname{Null}",
-          "\\Rank": "\\operatorname{Rank}", "\\Nullity": "\\operatorname{Nullity}", "\\spn": "\\operatorname{span}", "\\sign": "\\operatorname{sign}",
-          "\\tr": "\\operatorname{tr}", "\\diag": "\\operatorname{diag}", "\\RS": "\\operatorname{RS}", "\\CS": "\\operatorname{CS}",
-        },
+        macros: Object.assign({}, LA.KATEX_MACROS),
       });
     } catch (e) { console.warn("KaTeX render error", e); }
   };
   LA.tex = function (s, display) {
     if (!window.katex) return esc(s);
-    try { return window.katex.renderToString(s, { displayMode: !!display, throwOnError: false, strict: "ignore", macros: { "\\R": "\\mathbb{R}", "\\P": "\\mathbb{P}", "\\Lin": "\\mathcal{L}", "\\B": "\\mathcal{B}", "\\Cc": "\\mathcal{C}", "\\ip": "\\langle #1,#2\\rangle", "\\norm": "\\lVert #1\\rVert", "\\spn": "\\operatorname{span}", "\\Ran": "\\operatorname{Ran}", "\\Null": "\\operatorname{Null}" } }); }
+    try { return window.katex.renderToString(s, { displayMode: !!display, throwOnError: false, strict: "ignore", macros: Object.assign({}, LA.KATEX_MACROS) }); }
     catch (e) { return '<span class="err">' + esc(s) + "</span>"; }
   };
 
@@ -112,7 +113,7 @@
     { id: "first", ico: "🌱", name: "First Steps", desc: "Complete your first lesson section", test: (s) => Object.keys(s.done).length >= 1 },
     { id: "ch3", ico: "🔁", name: "Transformer", desc: "Complete every section of Chapter 3", test: () => LA.chapterProgress("ch3").pct === 100 },
     { id: "ch4", ico: "📐", name: "Orthogonal Mind", desc: "Complete every section of Chapter 4", test: () => LA.chapterProgress("ch4").pct === 100 },
-    { id: "all", ico: "👑", name: "Course Complete", desc: "Complete every section of all 7 chapters", test: () => Object.keys(LA.chapters).every((k) => LA.chapterProgress(k).pct === 100) },
+    { id: "all", ico: "👑", name: "Course Complete", desc: "Complete every section of every chapter", test: () => Object.keys(LA.chapters).every((k) => LA.chapterProgress(k).pct === 100) },
     { id: "quiz10", ico: "⚡", name: "Quick Thinker", desc: "Answer 10 quiz questions correctly", test: (s) => s.stats.quizCorrect >= 10 },
     { id: "quiz50", ico: "🧠", name: "Big Brain", desc: "Answer 50 quiz questions correctly", test: (s) => s.stats.quizCorrect >= 50 },
     { id: "perfect", ico: "💯", name: "Flawless", desc: "Score 100% on a quiz", test: (s) => s.stats.quizPerfect >= 1 },
@@ -151,6 +152,8 @@
   };
 
   /* ---------------- Router ---------------- */
+  // register a cleanup to run when the user navigates away (window listeners, timers…)
+  LA.onLeave = function (fn) { (LA._leave = LA._leave || []).push(fn); };
   LA.page = function (pattern, def) { LA.pages.push(Object.assign({ pattern }, def)); };
   function matchRoute(path) {
     for (const p of LA.pages) {
@@ -176,6 +179,7 @@
     const view = $("#view");
     if (LA.current && LA.current.page.leave) { try { LA.current.page.leave(); } catch (e) { /* noop */ } }
     LA.setResize(null);
+    (LA._leave || []).splice(0).forEach((fn) => { try { fn(); } catch (e) { /* ignore */ } });
     LA.current = m;
     let html;
     try { html = m.page.render(m.params, q); } catch (e) { console.error(e); html = '<div class="page"><div class="card"><h2>Something went wrong</h2><pre class="err">' + esc(e.stack || e.message) + "</pre></div></div>"; }
@@ -184,6 +188,7 @@
     document.title = (m.page.title ? (typeof m.page.title === "function" ? m.page.title(m.params) : m.page.title) + " · " : "") + "MATH2273 Linear Algebra I";
     LA.enhance(view);
     if (m.page.after) { try { m.page.after(view, m.params, q); } catch (e) { console.error(e); } }
+    (LA.afterRoute || []).forEach((fn) => { try { fn(view, m, q); } catch (e) { console.error(e); } });
     LA.renderMath(view);
     LA.updateNav();
     document.body.classList.remove("nav-open");
@@ -196,14 +201,25 @@
   const TAGS = { def: "Definition", thm: "Theorem", prop: "Proposition", lem: "Lemma", cor: "Corollary", rem: "Remark", note: "Note", ex: "Example", proof: "Proof", tip: "Tip · Trick", trap: "Exam trap", exam: "Exam focus", intuition: "Intuition", recipe: "Recipe", beyond: "Beyond the notes", template: "Proof template", errata: "Correction" };
   LA.TAGS = TAGS;
   LA.boxTag = function (el) { for (const c of el.classList) if (TAGS[c]) return TAGS[c]; return ""; };
+  /* Depth levels: every box gets data-level f (Foundation), s (University Standard) or a (Advanced Enrichment).
+     Content can set data-level explicitly; otherwise the default depends on the box type. */
+  LA.DEPTH = {
+    f: { name: "Foundation", desc: "Core definitions, statements, examples, intuition, tips and traps — what you need to follow the course." },
+    s: { name: "University Standard", desc: "Everything examinable at university level: adds full proofs, exam-style questions and proof templates." },
+    a: { name: "Advanced Enrichment", desc: "Goes deeper than the notes require (clearly labelled). Great for understanding — check with your lecturer before relying on it in an exam." },
+  };
+  const LVL_DEFAULT = { proof: "s", template: "s", exam: "s", beyond: "a" };
+  LA.boxLevel = function (b) { if (b.dataset.level) return b.dataset.level; for (const c of b.classList) if (LVL_DEFAULT[c]) return LVL_DEFAULT[c]; return "f"; };
   LA.enhance = function (root) {
     $$(".box", root).forEach((b) => {
       if (b.dataset.enh) return; b.dataset.enh = "1";
+      b.dataset.level = LA.boxLevel(b);
       const t = b.getAttribute("data-t");
       const tag = b.getAttribute("data-tag") || LA.boxTag(b);
       if (t || tag) {
         const h = document.createElement("div"); h.className = "box-h";
-        h.innerHTML = (tag ? '<span class="box-tag">' + tag + "</span>" : "") + (t ? '<span class="box-title">' + t + "</span>" : "");
+        h.innerHTML = (tag ? '<span class="box-tag">' + tag + "</span>" : "") + (t ? '<span class="box-title">' + t + "</span>" : "") +
+          (b.dataset.level === "a" && !/enrich/i.test(tag) ? '<span class="lvl-chip" title="' + LA.DEPTH.a.desc + '">★ Enrichment</span>' : "");
         b.insertBefore(h, b.firstChild);
         if (t && !b.id) b.id = "b-" + slug(t);
       }
@@ -233,14 +249,23 @@
   /* ---------------- Layout & nav ---------------- */
   LA.NAV = [
     { title: "Start", items: [
-      { href: "#/", ico: "🏠", label: "Dashboard" },
+      { href: "#/", ico: "🏠", label: "Home" },
+      { href: "#/dashboard", ico: "📊", label: "Smart Dashboard" },
+      { href: "#/notes", ico: "📝", label: "My Notes & Bookmarks" },
       { href: "#/plan", ico: "🎯", label: "Coursework Battle Plan", badge: "CH 3·4" },
     ] },
     { title: "Learn — Chapters", items: "CHAPTERS" },
+    { title: "Master It", items: [
+      { href: "#/learn", ico: "🎛️", label: "Topic Studio (5 modes)" },
+      { href: "#/practice", ico: "♾️", label: "Adaptive Practice Arena" },
+      { href: "#/proofs/examiner", ico: "🔎", label: "Proof Examiner" },
+      { href: "#/proofs/drills", ico: "🧩", label: "Proof Drills" },
+      { href: "#/counterexamples", ico: "🧪", label: "Counterexample Lab" },
+      { href: "#/exams", ico: "🎓", label: "Exam Centre" },
+    ] },
     { title: "Coursework Prep", items: [
-      { href: "#/recipes", ico: "🧪", label: "Question Recipes" },
+      { href: "#/recipes", ico: "📋", label: "Question Recipes" },
       { href: "#/proofs", ico: "✍️", label: "Proof Studio" },
-      { href: "#/practice", ico: "♾️", label: "Practice Arena" },
       { href: "#/quiz", ico: "⚡", label: "Quizzes" },
       { href: "#/mock", ico: "⏱️", label: "Mock Tests" },
       { href: "#/flashcards", ico: "🃏", label: "Flashcards" },
@@ -256,14 +281,23 @@
       { href: "#/labs/rref", ico: "🪜", label: "Row Reduction Stepper" },
       { href: "#/labs/det", ico: "🔢", label: "Determinant Lab" },
       { href: "#/labs/eigen", ico: "🧿", label: "Eigen Lab" },
+      { href: "#/labs/change-of-basis", ico: "🧭", label: "Change-of-Basis Lab" },
+      { href: "#/labs/quadratic", ico: "🥚", label: "Quadratic Forms Lab" },
+      { href: "#/labs/gs-studio", ico: "🎬", label: "Gram–Schmidt Studio" },
+      { href: "#/labs/calculator", ico: "🧮", label: "Matrix Calculator" },
     ] },
     { title: "Reference", items: [
+      { href: "#/encyclopedia", ico: "📚", label: "Encyclopedia & Theorems" },
+      { href: "#/map", ico: "🗺️", label: "Concept Map" },
       { href: "#/formulas", ico: "📜", label: "Formula & Theorem Sheet" },
       { href: "#/glossary", ico: "🔤", label: "Glossary & Notation" },
       { href: "#/pastpapers", ico: "🗂️", label: "Past Papers" },
       { href: "#/beyond", ico: "🚀", label: "Beyond the Notes" },
+      { href: "#/syllabus", ico: "🧭", label: "Syllabus Coverage" },
       { href: "#/errata", ico: "🩹", label: "Notes Corrections" },
-      { href: "#/progress", ico: "🏆", label: "Progress & Badges" },
+      { href: "#/print", ico: "🖨️", label: "Print Sheets" },
+      { href: "#/progress", ico: "🏆", label: "Progress, Badges & Data" },
+      { href: "#/settings", ico: "⚙️", label: "Settings & Accessibility" },
     ] },
   ];
   function chapterNavItems() {
@@ -299,7 +333,8 @@
 
   /* ---------------- Search palette ---------------- */
   let INDEX = null;
-  function stripTex(s) { return s.replace(/\\[a-zA-Z]+/g, " ").replace(/[{}$^_\\]/g, " ").replace(/\s+/g, " ").trim(); }
+  const KEEP = { det: 1, ker: 1, dim: 1, Rank: 1, Nullity: 1, Null: 1, Ran: 1, spn: "span", span: 1, tr: 1, diag: 1, lambda: 1, perp: 1, sqrt: 1 };
+  function stripTex(s) { return s.replace(/\\([a-zA-Z]+)/g, (m0, w) => (KEEP[w] ? " " + (KEEP[w] === 1 ? w : KEEP[w]) + " " : " ")).replace(/[{}$^_\\]/g, " ").replace(/\s+/g, " ").trim(); }
   function buildIndex() {
     const idx = [];
     const tmp = document.createElement("div");
@@ -362,7 +397,16 @@
 
   /* ---------------- Shared UI snippets ---------------- */
   // one resize handler per page (replaced on navigation, so listeners never pile up)
-  LA.setResize = function (fn) { if (LA._rs) window.removeEventListener("resize", LA._rs); LA._rs = fn; if (fn) window.addEventListener("resize", fn, { passive: true }); };
+  // Lab canvases redraw on resize — but only when the window WIDTH really changes, debounced. This avoids
+  // feedback loops with classic scrollbars (canvas grows → scrollbar appears → narrower → …) and needless
+  // redraws on phones when the address bar shows/hides (height-only resizes).
+  LA.setResize = function (fn) {
+    if (LA._rs) window.removeEventListener("resize", LA._rs);
+    LA._rs = null; if (!fn) return;
+    let lastW = window.innerWidth, tm = null;
+    LA._rs = () => { if (window.innerWidth === lastW) return; lastW = window.innerWidth; clearTimeout(tm); tm = setTimeout(fn, 120); };
+    window.addEventListener("resize", LA._rs, { passive: true });
+  };
   LA.ring = (pct, label) => '<div class="ring" style="--p:' + pct + '"><span>' + (label === undefined ? pct + "%" : label) + "</span></div>";
   LA.sectionTitle = (t) => '<div class="section-title"><h2>' + t + "</h2></div>";
 

@@ -4,13 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>MATH2273 Linear Algebra I — The Ultimate Study Hub</title>
-  <meta name="description" content="Interactive study hub for MATH2273 Linear Algebra I: full lessons for every chapter, proof templates, step-by-step solvers, practice generators, quizzes, mock tests and formula sheets.">
+  <meta name="description" content="Interactive study hub for MATH2273 Linear Algebra I (UWI): lessons for every chapter including quadratic forms, a five-mode Topic Studio, adaptive practice with exact answer checking, a Proof Examiner, counterexample lab, timed exams with marking schemes, spaced-repetition flashcards, labs and an encyclopedia.">
   <meta name="theme-color" content="#05070f">
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%2322d3ee'/%3E%3Cstop offset='.5' stop-color='%23a78bfa'/%3E%3Cstop offset='1' stop-color='%23f472b6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='64' height='64' rx='16' fill='url(%23g)'/%3E%3Ctext x='32' y='42' font-family='Arial' font-weight='900' font-size='26' text-anchor='middle' fill='%230b1020'%3ELA%3C/text%3E%3C/svg%3E">
   <link rel="stylesheet" href="assets/vendor/katex/katex.min.css">
   <link rel="stylesheet" href="assets/css/main.css">
 </head>
 <body>
+  <a class="skip-link" href="#view" onclick="event.preventDefault();document.getElementById('view').focus();">Skip to main content</a>
   <div class="bg-fx" aria-hidden="true"><div class="grid"></div><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
 
   <header class="header">
@@ -39,7 +40,12 @@
   <!-- Core -->
   <script src="assets/js/core/math.js"></script>
   <script src="assets/js/core/parse.js"></script>
+  <script src="assets/js/core/rng.js"></script>
+  <script src="assets/js/core/answers.js"></script>
   <script src="assets/js/core/app.js"></script>
+  <script src="assets/js/core/mastery.js"></script>
+  <script src="assets/js/core/topics.js"></script>
+  <script src="assets/js/ui/keyboard.js"></script>
 
   <!-- Chapter content -->
   <script src="assets/js/content/ch1.js"></script>
@@ -51,6 +57,9 @@
   <script src="assets/js/content/ch5.js"></script>
   <script src="assets/js/content/ch6.js"></script>
   <script src="assets/js/content/ch7.js"></script>
+  <script src="assets/js/content/ch8.js"></script>
+  <script src="assets/js/content/additions.js"></script>
+  <script src="assets/js/content/deep.js"></script>
 
   <!-- Study data -->
   <script src="assets/js/data/quiz.js"></script>
@@ -66,6 +75,8 @@
   <script src="assets/js/pages/proofs.js"></script>
   <script src="assets/js/pages/study.js"></script>
   <script src="assets/js/pages/reference.js"></script>
+  <script src="assets/js/pages/syllabus.js"></script>
+  <script src="assets/js/pages/pastpapers.js"></script>
 
   <!-- Interactive labs & practice -->
   <script src="assets/js/tools/transform2d.js"></script>
@@ -73,7 +84,28 @@
   <script src="assets/js/tools/gramschmidt.js"></script>
   <script src="assets/js/tools/gs3d.js"></script>
   <script src="assets/js/tools/matrixtools.js"></script>
+  <script src="assets/js/tools/plane.js"></script>
+  <script src="assets/js/tools/cob.js"></script>
+  <script src="assets/js/tools/quadlab.js"></script>
+  <script src="assets/js/tools/calc.js"></script>
+  <script src="assets/js/tools/gsstudio.js"></script>
   <script src="assets/js/practice/generators.js"></script>
+  <script src="assets/js/practice/bank-core.js"></script>
+  <script src="assets/js/practice/bank-34.js"></script>
+  <script src="assets/js/practice/bank-58.js"></script>
+  <script src="assets/js/practice/arena.js"></script>
+  <script src="assets/js/learn/proofexam.js"></script>
+  <script src="assets/js/learn/drills.js"></script>
+  <script src="assets/js/learn/counter.js"></script>
+  <script src="assets/js/learn/studio.js"></script>
+  <script src="assets/js/exam/bank.js"></script>
+  <script src="assets/js/exam/exams.js"></script>
+  <script src="assets/js/study/srs.js"></script>
+  <script src="assets/js/pages/encyclopedia.js"></script>
+  <script src="assets/js/pages/conceptmap.js"></script>
+  <script src="assets/js/ui/labmeta.js"></script>
+  <script src="assets/js/ui/personal.js"></script>
+  <script src="assets/js/pages/dashboard.js"></script>
 
   <script>LA.boot();</script>
 </body>

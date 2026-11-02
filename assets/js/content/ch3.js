@@ -264,6 +264,8 @@ $T(p) = 0$ forces $a_2 = 0$, then $a_1 = 0$, then $a_0 = 0$. So $\Null(T) = \{0\
 <p>With these operations $\Lin(V,W)$ is a vector space over $\FF$, and
 $$\dim\Lin(V,W) = \dim(V)\cdot\dim(W).$$</p>
 </div>
+<div class="box proof" data-t="of Theorem 3.3.2 (dimension of ℒ(V,W))" data-level="a">
+<p>Fix bases $\B$ of $V$ ($n$ vectors) and $\Cc$ of $W$ ($m$ vectors). The map $\Phi:\Lin(V,W)\to\R^{m\times n}$, $\Phi(T) = [T]^{\Cc}_{\B}$ is <b>linear</b> ($[S+T] = [S]+[T]$ and $[\alpha T] = \alpha[T]$ column by column), <b>injective</b> (if $[T] = 0$ then every $T(v_i) = 0$, so $T = 0$ by Theorem 3.1.6), and <b>surjective</b> (any matrix $A$ defines $T(v_i) = \sum_k a_{ki}w_k$, extended linearly). So $\Lin(V,W)\cong\R^{m\times n}$ and $\dim\Lin(V,W) = mn$.</p></div>
 <div class="box intuition" data-t="Why the dimension multiplies">
 <p>Once bases are fixed, each $T\in\Lin(V,W)$ corresponds to exactly one $m\times n$ matrix ($n=\dim V$, $m=\dim W$) — see §3.4. The space of $m\times n$ matrices has $mn$ entries to choose, so dimension $mn$.</p>
 </div>
@@ -431,6 +433,8 @@ The right-hand block <b>is</b> the answer. The <a href="#/labs/matrix">Matrix-of
 <div class="box thm" data-t="3.4.6 · Diagonalizable ⇔ similar to a diagonal matrix">
 <p>With $A = [T]_{\B}$: $T$ is diagonalizable iff there is an invertible $P$ with $P^{-1}AP$ diagonal.</p>
 </div>
+<div class="box proof" data-t="of Theorem 3.4.6">
+<p>$T$ is diagonalizable iff some basis $\B'$ has $[T]_{\B'}$ diagonal. If $P$ is the change-of-basis matrix whose columns are the vectors of $\B'$ written in $\B$-coordinates, then $[T]_{\B'} = P^{-1}[T]_{\B}P = P^{-1}AP$ (change of basis — see "Beyond the notes" at the end of §3.4). So a diagonalizing basis exists iff an invertible $P$ makes $P^{-1}AP$ diagonal. Conversely, given such a $P$, its columns (read as $\B$-coordinates) form a basis $\B'$ in which $T$ is diagonal.</p></div>
 <div class="box def" data-t="3.4.7 · Similar matrices">
 <p>$A$ and $B$ are <b>similar</b> if $P^{-1}AP = B$ for some invertible $P$.</p>
 </div>

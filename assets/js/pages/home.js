@@ -42,7 +42,7 @@
   }
 
   function nextSection() {
-    const order = ["ch3", "ch4", "ch1", "ch2", "ch5", "ch6", "ch7"];
+    const order = ["ch3", "ch4", "ch1", "ch2", "ch5", "ch6", "ch7", "ch8"];
     for (const id of order) { const ch = LA.chapters[id]; if (!ch) continue; const s = ch.sections.find((x) => !LA.state.done[id + "/" + x.id]); if (s) return { ch, s }; }
     return null;
   }
@@ -95,7 +95,7 @@
 
         LA.sectionTitle("Reference") +
         '<div class="grid grid-4">' + [["📜", "Formula & Theorem Sheet", "#/formulas"], ["🔤", "Glossary & Notation", "#/glossary"], ["🗂️", "Past Papers", "#/pastpapers"], ["🩹", "Notes Corrections", "#/errata"]].map((f) => '<a class="card hover" href="' + f[2] + '" style="padding:16px"><div class="feature-ico">' + f[0] + '</div><b>' + f[1] + "</b></a>").join("") + "</div>" +
-        '<div class="footer">Built from <i>MATH 2273 Chapters 1–7</i> (V. Job) and the Gram–Schmidt handout. All worked answers were cross-checked with a computer algebra system. Progress is saved in this browser only. · <a href="#/about">About</a></div>' +
+        '<div class="footer">Built from <i>MATH 2273 Chapters 1–7</i> (V. Job), the Gram–Schmidt handout and the official course outline (Chapter 8 and §5.3 fill syllabus topics the notes do not cover). All worked answers were cross-checked with a computer algebra system. Progress is saved in this browser only. · <a href="#/about">About</a></div>' +
         "</div>";
     },
     after(view) {

@@ -51,7 +51,7 @@
     title: "Quizzes", searchTitle: "Quizzes", searchDesc: "Multiple-choice concept checks with explanations",
     render() {
       const best = LA.store.get("quizBest", {});
-      const sets = [["mix34", "🎯", "Coursework mix (Ch 3 & 4)"], ["ch3", "3", ""], ["ch4", "4", ""], ["ch1", "1", ""], ["ch2", "2", ""], ["ch5", "5", ""], ["ch6", "6", ""], ["ch7", "7", ""], ["all", "∞", "Everything (random 20)"]];
+      const sets = [["mix34", "🎯", "Coursework mix (Ch 3 & 4)"], ["ch3", "3", ""], ["ch4", "4", ""], ["ch1", "1", ""], ["ch2", "2", ""], ["ch5", "5", ""], ["ch6", "6", ""], ["ch7", "7", ""], ["ch8", "8", ""], ["all", "∞", "Everything (random 20)"]];
       return '<div class="page"><div class="hero"><div class="hero-content"><div class="kicker">Concept checks</div><h1>Quizzes</h1><p class="lead">Every answer comes with an explanation. Wrong answers are where the learning happens — read each explanation, then retake until you score 90%+.</p></div></div>' +
         '<div class="grid grid-3" style="margin-top:18px">' + sets.map((s) => { const set = LA.QUIZ[s[0]]; if (!set) return ""; const b = best[s[0]]; return '<a class="card hover" href="#/quiz/' + s[0] + '"><div class="ch-card">' + LA.ring(b || 0, b ? b + "%" : "—") + '<div><div class="kicker">' + (s[0] === "mix34" ? "Coursework" : s[0] === "all" ? "All chapters" : "Chapter " + s[1]) + "</div><h3>" + (s[2] || set.title.replace(/^Chapter \d — /, "")) + "</h3><p>" + Math.min(set.qs.length, 20) + " questions" + (b ? " · best " + b + "%" : "") + "</p></div></div></a>"; }).join("") + "</div></div>";
     },
@@ -63,13 +63,13 @@
   });
 
   /* =================== FLASHCARDS =================== */
-  LA.page("/flashcards", {
-    title: "Flashcards", searchTitle: "Flashcards", searchDesc: "Definitions & theorems with spaced repetition",
+  LA.page("/flashcards/classic", {
+    title: "Classic Flashcards", searchTitle: "Classic Flashcards (v1 Leitner boxes)", searchDesc: "Definitions & theorems with spaced repetition",
     render(p, q) {
       const filter = q.ch || "34";
-      const chips = [["34", "Ch 3 + 4 (coursework)"], ["all", "All"], ["ch3", "Ch 3"], ["ch4", "Ch 4"], ["ch1", "Ch 1"], ["ch2", "Ch 2"], ["ch5", "Ch 5"], ["ch6", "Ch 6"], ["ch7", "Ch 7"]];
+      const chips = [["34", "Ch 3 + 4 (coursework)"], ["all", "All"], ["ch3", "Ch 3"], ["ch4", "Ch 4"], ["ch1", "Ch 1"], ["ch2", "Ch 2"], ["ch5", "Ch 5"], ["ch6", "Ch 6"], ["ch7", "Ch 7"], ["ch8", "Ch 8"]];
       return '<div class="page"><div class="hero"><div class="hero-content"><div class="kicker">Spaced repetition</div><h1>Flashcards</h1><p class="lead">Say the answer out loud (or write it), then flip. Rate yourself honestly — cards you miss come back sooner. <span class="key-hint">Keys: <kbd>Space</kbd> flip · <kbd>1</kbd> again · <kbd>2</kbd> hard · <kbd>3</kbd> good · <kbd>4</kbd> easy</span></p></div></div>' +
-        '<div class="row" style="margin:16px 0">' + chips.map((c) => '<a class="chip ' + (c[0] === filter ? "violet" : "") + '" href="#/flashcards?ch=' + c[0] + '">' + c[1] + "</a>").join("") + "</div>" +
+        '<div class="row" style="margin:16px 0">' + chips.map((c) => '<a class="chip ' + (c[0] === filter ? "violet" : "") + '" href="#/flashcards/classic?ch=' + c[0] + '">' + c[1] + "</a>").join("") + "</div>" +
         '<div id="boxes" class="card" style="margin-bottom:14px"></div><div class="flash-wrap"><div class="flashcard" id="fc"><div class="flash-face front"></div><div class="flash-face back"></div></div></div>' +
         '<div class="row" style="justify-content:center;margin-top:16px" id="fcBtns"><button class="btn btn-primary" data-flip>Flip (Space)</button></div></div>';
     },
@@ -122,6 +122,7 @@
         else if (flipped && ["1", "2", "3", "4"].includes(ev.key)) rate(Number(ev.key) - 1);
       };
       document.addEventListener("keydown", onKey);
+      LA.onLeave(() => document.removeEventListener("keydown", onKey)); // don't keep the old page alive after navigating away
       drawBoxes(); show();
     },
   });
