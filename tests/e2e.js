@@ -89,7 +89,7 @@ async function audit(page) {
   dyn.mocks.forEach((m) => routes.push("/mock/" + m));
   dyn.topics.slice(0, 6).forEach((t) => routes.push("/print/topic/" + t));
   ["theorems", "definitions", "proofs", "formulas", "counterexamples", "mistakes", "notation", "recipes"].forEach((t) => routes.push("/encyclopedia?tab=" + t));
-  let k = 0;
+  let k = 0; const titles = {};
   for (const r of routes) {
     if (++k % 50 === 0) console.log("… " + k + " routes (" + r + ")");
     let a;
@@ -101,8 +101,11 @@ async function audit(page) {
     ok(a.raw === 0, "no unrendered $ on " + r);
     ok(a.text > 40, "content rendered on " + r);
     ok(!a.badML.length, "valid MathML on " + r + (a.badML.length ? ": " + a.badML[0] : ""));
+    if (dyn.pages.includes(r)) { const t = await page.title(); (titles[t] = titles[t] || []).push(r); }
   }
   console.log("routes checked: " + routes.length);
+  // every page has its own title (browser history, tabs and screen readers announce it)
+  Object.entries(titles).forEach(([t, rs]) => ok(rs.length === 1, "unique page title \"" + t + "\"" + (rs.length > 1 ? " shared by " + rs.join(", ") : "")));
 
   // one guarded step: any error or stall is recorded as a failure and the run continues on a fresh page
   const step = async (name, fn, ms) => {

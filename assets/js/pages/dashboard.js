@@ -50,7 +50,7 @@
       "</div>";
   }
   LA.page("/dashboard", {
-    title: "Dashboard", searchTitle: "Smart dashboard", searchDesc: "Mastery vs activity, accuracy trends, exams, flashcards, mistakes, weak concepts, recommendations",
+    title: "Smart Dashboard", searchTitle: "Smart dashboard", searchDesc: "Mastery vs activity, accuracy trends, exams, flashcards, mistakes, weak concepts, recommendations",
     render() {
       const M = metrics();
       return '<div class="page wide"><div class="hero"><div class="hero-content"><div class="kicker">Your learning, measured honestly</div><h1>Smart dashboard</h1><p class="lead">Mastery comes only from answering questions; activity shows effort. Everything below is computed from what you have done on this device.</p><div class="row"><a class="btn" href="#/map">🗺️ Concept map</a><a class="btn" href="#/progress">🏆 Badges &amp; data export</a></div></div></div>' + cards(M, true) +
