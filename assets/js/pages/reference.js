@@ -71,8 +71,8 @@
   GLOSS.forEach((g) => LA.searchExtra.push({ t: "Glossary · " + g[0], m: g[1].replace(/\$/g, ""), href: "#/glossary", k: "gloss" }));
 
   /* ---------------- Past papers ---------------- */
-  LA.page("/pastpapers", {
-    title: "Past Papers", searchTitle: "Past Papers", searchDesc: "Official UWI archive, how to use past papers, your past-paper log",
+  LA.page("/pastpapers/classic", {
+    title: "Past Papers (classic)", searchTitle: "Past Papers (classic log)", searchDesc: "Official UWI archive, how to use past papers, your past-paper log",
     render() {
       const log = LA.store.get("ppLog", []);
       const tags = {}; log.forEach((e) => (e.tags || []).forEach((t) => { tags[t] = (tags[t] || 0) + 1; }));

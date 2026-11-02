@@ -364,6 +364,34 @@ textarea.ans-in { min-height: 70px; resize: vertical; }
 .ce-in span { min-width: 130px; font-weight: 600; font-size: .9rem; }
 .ce-in input { flex: 1; }
 .ce-card.solved { border-color: rgba(163,230,53,.4); }
+/* Exams */
+.exam-bar { position: sticky; top: calc(var(--header-h) + 8px); z-index: 20; display: flex; flex-wrap: wrap; gap: 12px; align-items: center; justify-content: space-between; padding: 12px 18px; }
+.timer.big { font-size: 1.9rem; }
+.timer.warn { color: var(--amber); }
+.timer.danger { color: var(--red); animation: pulse 1s infinite; }
+.exam-grid { display: grid; grid-template-columns: 120px minmax(0, 1fr); gap: 14px; margin-top: 14px; align-items: start; }
+@media (max-width: 760px) { .exam-grid { grid-template-columns: 1fr; } .exam-nav { display: flex; flex-wrap: wrap; } }
+.exam-nav { display: grid; gap: 6px; padding: 10px; position: sticky; top: calc(var(--header-h) + 90px); }
+.qnav { font: inherit; font-weight: 700; display: flex; justify-content: space-between; align-items: baseline; gap: 6px; padding: 7px 10px; border-radius: 10px; border: 1px solid var(--border-strong); background: var(--panel-2); color: var(--text); cursor: pointer; }
+.qnav small { color: var(--muted); font-weight: 600; }
+.qnav.on { border-color: var(--violet); box-shadow: var(--glow-violet); }
+.qnav.done { background: rgba(163,230,53,.10); }
+.qnav.flag { border-style: dashed; border-color: var(--amber); }
+.exam-part { margin: 14px 0; padding-top: 10px; border-top: 1px solid var(--border); }
+.exam-part textarea { width: 100%; margin-top: 8px; }
+.scheme { margin-top: 8px; }
+.chip.comp-M { color: var(--cyan); } .chip.comp-A { color: var(--lime); } .chip.comp-J { color: var(--violet); } .chip.comp-P { color: var(--pink); } .chip.comp-N { color: var(--blue); } .chip.comp-C { color: var(--orange); } .chip.comp-F { color: var(--amber); }
+.trend { width: 100%; max-width: 560px; height: auto; }
+.trend .tline { fill: none; stroke: var(--violet); stroke-width: 2.5; }
+.trend .tdot { fill: var(--cyan); }
+.trend .t50 { stroke: var(--border-strong); stroke-dasharray: 4 4; }
+.trend .tlab { fill: var(--muted); font-size: 11px; }
+.mono { font-family: var(--font-mono); }
+/* SRS flashcards */
+.srs-card { max-width: 820px; margin: 0 auto; }
+.srs-front { margin: .5em 0; font-size: 1.35rem; }
+.srs-card textarea { width: 100%; }
+.srs-card [data-r] small { opacity: .7; font-weight: 500; }
 /* Depth levels (Foundation / Standard / Enrichment) */
 .lvl-chip { margin-left: auto; font-size: .64rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; padding: 2px 9px; border-radius: 999px; border: 1px dashed var(--pink); color: var(--pink); white-space: nowrap; cursor: help; }
 .lesson[data-depth="f"] .box[data-level="s"], .lesson[data-depth="f"] .box[data-level="a"], .lesson[data-depth="s"] .box[data-level="a"] { display: none; }

@@ -24,6 +24,7 @@
     return null;
   }
   const typeOf = (ans) => (ans.type === "custom" ? ans.view || null : ans.type);
+  LA.previewAnswer = preview;
 
   /* ---------------- reusable problem player ---------------- */
   // opts: { src: "practice"|"exam"|..., onNext(), onResult(res), retryOf, compact, noNext, record:true }

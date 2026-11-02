@@ -255,6 +255,7 @@
       { href: "#/proofs/examiner", ico: "🔎", label: "Proof Examiner" },
       { href: "#/proofs/drills", ico: "🧩", label: "Proof Drills" },
       { href: "#/counterexamples", ico: "🧪", label: "Counterexample Lab" },
+      { href: "#/exams", ico: "🎓", label: "Exam Centre" },
     ] },
     { title: "Coursework Prep", items: [
       { href: "#/recipes", ico: "📋", label: "Question Recipes" },

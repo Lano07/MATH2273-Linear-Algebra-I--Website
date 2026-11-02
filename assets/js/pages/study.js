@@ -63,13 +63,13 @@
   });
 
   /* =================== FLASHCARDS =================== */
-  LA.page("/flashcards", {
-    title: "Flashcards", searchTitle: "Flashcards", searchDesc: "Definitions & theorems with spaced repetition",
+  LA.page("/flashcards/classic", {
+    title: "Classic Flashcards", searchTitle: "Classic Flashcards (v1 Leitner boxes)", searchDesc: "Definitions & theorems with spaced repetition",
     render(p, q) {
       const filter = q.ch || "34";
       const chips = [["34", "Ch 3 + 4 (coursework)"], ["all", "All"], ["ch3", "Ch 3"], ["ch4", "Ch 4"], ["ch1", "Ch 1"], ["ch2", "Ch 2"], ["ch5", "Ch 5"], ["ch6", "Ch 6"], ["ch7", "Ch 7"], ["ch8", "Ch 8"]];
       return '<div class="page"><div class="hero"><div class="hero-content"><div class="kicker">Spaced repetition</div><h1>Flashcards</h1><p class="lead">Say the answer out loud (or write it), then flip. Rate yourself honestly — cards you miss come back sooner. <span class="key-hint">Keys: <kbd>Space</kbd> flip · <kbd>1</kbd> again · <kbd>2</kbd> hard · <kbd>3</kbd> good · <kbd>4</kbd> easy</span></p></div></div>' +
-        '<div class="row" style="margin:16px 0">' + chips.map((c) => '<a class="chip ' + (c[0] === filter ? "violet" : "") + '" href="#/flashcards?ch=' + c[0] + '">' + c[1] + "</a>").join("") + "</div>" +
+        '<div class="row" style="margin:16px 0">' + chips.map((c) => '<a class="chip ' + (c[0] === filter ? "violet" : "") + '" href="#/flashcards/classic?ch=' + c[0] + '">' + c[1] + "</a>").join("") + "</div>" +
         '<div id="boxes" class="card" style="margin-bottom:14px"></div><div class="flash-wrap"><div class="flashcard" id="fc"><div class="flash-face front"></div><div class="flash-face back"></div></div></div>' +
         '<div class="row" style="justify-content:center;margin-top:16px" id="fcBtns"><button class="btn btn-primary" data-flip>Flip (Space)</button></div></div>';
     },
