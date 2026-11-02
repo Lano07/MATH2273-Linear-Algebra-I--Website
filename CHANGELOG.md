@@ -33,11 +33,12 @@ An upgrade of the existing site (not a rebuild): every v1 page, lab and saved-pr
 * **Smart dashboard** separating mastery from activity, with trends, heatmap, weak concepts and recommendations.
 * **Bookmarks, notes, highlights with annotations**, *My Notes* page; **focus mode**, text size, line spacing and motion settings; skip link, visible focus styles, keyboard shortcuts; expanded search (topics, theorems, generators, exam questions, drills, counterexamples, mistakes); print sheets.
 * Responsive fixes for phones and tablets (no horizontal overflow at 390 / 820 / 1440 px).
-* **Tests**: Node unit + mathematical regression suite (~79,000 checks) and a Playwright end-to-end suite (~1,900 checks: every route, MathML validity, overflow at 390 / 820 / 1440 px, user flows), run on GitHub Actions in Chromium, Firefox and WebKit.
+* **Tests**: Node unit + mathematical regression suite (~79,000 checks) and a Playwright end-to-end suite (~1,930 checks: every route, MathML validity, overflow at 390 / 820 / 1440 px, user flows), run on GitHub Actions in Chromium, Firefox and WebKit.
 * Fix: constant expressions such as `1/2` are now parsed exactly (they were silently compared as decimals).
 * Fix: maths such as $\lambda_{\mathrm{min}}$ produced invalid MathML in Firefox/Safari (and for screen readers); now valid everywhere, with a test guard.
 * Fix: labs, flashcards, the proof examiner and the math keyboard no longer leave listeners behind (or keep old pages in memory) after you navigate away; a keyboard rating in flashcards rates exactly one card.
 * Fix: long button labels wrap on phones instead of being cut off.
+* Fix: the home page and the Smart Dashboard shared the title "Dashboard"; they are now "Home" and "Smart Dashboard", and a test checks that every page has its own title.
 * Performance: cards no longer blur the animated background behind them (visually identical, but every card was re-blurred on every frame): pages render at ~60 fps instead of 22–40 fps under CPU throttling, which also saves battery during long study sessions. Header buttons no longer animate their size when the window narrows (phone rotation).
 * Accessibility: elements scrolled into view by the keyboard or by links land below the sticky header instead of underneath it; the highlight toolbar stays on screen near the right edge.
 

@@ -48,7 +48,7 @@
   }
 
   LA.page("/", {
-    title: "Dashboard", searchTitle: "Dashboard", searchDesc: "Home, countdown, progress",
+    title: "Home", searchTitle: "Home", searchDesc: "Start page: countdown, continue where you left off, progress",
     render() {
       const lvl = LA.level();
       const doneCount = Object.keys(LA.state.done).length;
