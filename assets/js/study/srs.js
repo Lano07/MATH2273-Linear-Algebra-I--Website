@@ -122,9 +122,11 @@
         };
         $("#srsShow", host).onclick = () => { if (proof && $("#srsTry", host).value.trim().length < 20) { LA.toast("Write your outline first", "At least a sentence or two — or press \"I can't recall it\"."); return; } reveal(false); };
         if (proof) $("#srsBlank", host).onclick = () => reveal(true);
-        const onKey = (ev) => { if (!document.body.contains(host)) return document.removeEventListener("keydown", onKey); if (/input|textarea/i.test((document.activeElement || {}).tagName || "")) return; const btns = $$("[data-r]", host); if (!btns.length) return; const k = { 1: 0, 2: 1, 3: 2, 4: 3 }[ev.key]; const b = btns.find((x) => +x.dataset.r === k); if (b) b.click(); };
-        document.addEventListener("keydown", onKey);
       };
+      // one key handler for the whole session (registering it per card stacked listeners); removed when leaving the page
+      const onKey = (ev) => { if (!document.body.contains(host)) return; if (/input|textarea/i.test((document.activeElement || {}).tagName || "")) return; const btns = $$("[data-r]", host); if (!btns.length) return; const k = { 1: 0, 2: 1, 3: 2, 4: 3 }[ev.key]; const b = btns.find((x) => +x.dataset.r === k); if (b) b.click(); };
+      document.addEventListener("keydown", onKey);
+      LA.onLeave(() => document.removeEventListener("keydown", onKey));
       load(); next();
     },
   });

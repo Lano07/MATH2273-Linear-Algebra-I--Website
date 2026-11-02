@@ -122,6 +122,7 @@
         else if (flipped && ["1", "2", "3", "4"].includes(ev.key)) rate(Number(ev.key) - 1);
       };
       document.addEventListener("keydown", onKey);
+      LA.onLeave(() => document.removeEventListener("keydown", onKey)); // don't keep the old page alive after navigating away
       drawBoxes(); show();
     },
   });

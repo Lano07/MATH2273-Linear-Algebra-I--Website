@@ -673,3 +673,6 @@ select[multiple] { max-width: 100%; }
 @media (max-width: 480px) { #focusBtn, #settingsBtn, .header .streak { display: none; } .header { gap: 6px; } }
 .header { min-width: 0; }
 html { scrollbar-gutter: stable; } /* layout width doesn't jump when a classic scrollbar appears */
+/* long button labels wrap instead of being clipped or pushing the page sideways (e.g. "▶ Continue: 3.1 Introduction: …" on a phone) */
+.btn { max-width: 100%; }
+@media (max-width: 760px) { .btn { white-space: normal; text-align: center; } }
